@@ -1,0 +1,91 @@
+{
+  "id": "deals",
+  "label": "All Deals",
+  "icon": "briefcase",
+  "description": "View all deals in the system",
+  "entity": "deals",
+  "columns": [
+    {
+      "key": "name",
+      "label": "Deal Name",
+      "type": "text",
+      "field": "name",
+      "filterable": true
+    },
+    {
+      "key": "clientName",
+      "label": "Client",
+      "type": "company",
+      "icon": "building",
+      "field": "clientName",
+      "filterable": true
+    },
+    {
+      "key": "value",
+      "label": "Value",
+      "type": "currency",
+      "field": "value",
+      "filterable": true
+    },
+    {
+      "key": "phase",
+      "label": "Phase",
+      "type": "text",
+      "field": "phase",
+      "filterable": true
+    },
+    {
+      "key": "expectedCloseDate",
+      "label": "Expected Close Date",
+      "type": "date",
+      "field": "expectedCloseDate"
+    },
+    {
+      "key": "dealType",
+      "label": "Deal Type",
+      "type": "text",
+      "field": "dealType",
+      "filterable": true
+    }
+  ],
+  "actions": [
+    {
+      "id": "new-deal",
+      "label": "New Deal",
+      "icon": "plus",
+      "type": "primary"
+    },
+    {
+      "id": "export",
+      "label": "Export",
+      "icon": "download",
+      "type": "secondary"
+    },
+    {
+      "id": "import",
+      "label": "Import",
+      "icon": "upload",
+      "type": "secondary"
+    }
+  ],
+  "visualizations": [
+    {
+      "field": "phase",
+      "type": "donut",
+      "title": "Deals by Phase",
+      "width": "third"
+    },
+    {
+      "field": "dealType",
+      "type": "donut",
+      "title": "Deals by Type",
+      "width": "third"
+    },
+    {
+      "field": "clientName",
+      "type": "donut",
+      "title": "Deals by Client",
+      "width": "third"
+    }
+  ]
+}

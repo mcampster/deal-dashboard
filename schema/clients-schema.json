@@ -1,0 +1,175 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Client Schema",
+  "description": "Schema for client entities in the dataset viewer",
+  "type": "object",
+  "required": ["id", "name", "industry", "location", "revenue"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the client"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the client company",
+      "minLength": 1
+    },
+    "industry": {
+      "type": "string",
+      "description": "Industry the client operates in",
+      "enum": [
+        "Technology",
+        "Manufacturing",
+        "Financial Services",
+        "Healthcare",
+        "Energy",
+        "Diversified",
+        "Biotechnology",
+        "Food & Beverage",
+        "Aerospace",
+        "Transportation",
+        "Paper & Packaging",
+        "Research"
+      ]
+    },
+    "location": {
+      "type": "string",
+      "description": "Primary location of the client (City, State format)",
+      "pattern": "^[A-Za-z\\s]+, [A-Z]{2}$"
+    },
+    "revenue": {
+      "type": "string",
+      "description": "Annual revenue of the client",
+      "pattern": "^\\$[0-9]+M$"
+    },
+    "employees": {
+      "type": "integer",
+      "description": "Number of employees at the client company",
+      "minimum": 1
+    },
+    "website": {
+      "type": "string",
+      "description": "Website URL of the client",
+      "format": "uri"
+    },
+    "founded": {
+      "type": "integer",
+      "description": "Year the client company was founded",
+      "minimum": 1800,
+      "maximum": 2023
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the client relationship",
+      "enum": ["Active", "Inactive", "Prospect", "Former"]
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the client company"
+    },
+    "headquarters": {
+      "type": "string",
+      "description": "Full address of the company headquarters"
+    },
+    "ceo": {
+      "type": "string",
+      "description": "Name of the CEO or primary executive"
+    },
+    "stockSymbol": {
+      "type": ["string", "null"],
+      "description": "Stock market symbol if publicly traded"
+    },
+    "yearlyGrowth": {
+      "type": "number",
+      "description": "Annual growth rate as a percentage"
+    },
+    "customerSegment": {
+      "type": "string",
+      "description": "Primary customer segment targeted by the company"
+    },
+    "keyProducts": {
+      "type": "array",
+      "description": "List of key products or services offered",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mainCompetitors": {
+      "type": "array",
+      "description": "List of main competitors",
+      "items": {
+        "type": "string"
+      }
+    },
+    "lastContactDate": {
+      "type": "string",
+      "description": "Date of last contact with the client",
+      "format": "date"
+    },
+    "accountManager": {
+      "type": "string",
+      "description": "Name of the account manager responsible for this client"
+    },
+    "contractValue": {
+      "type": "string",
+      "description": "Value of current contract with the client",
+      "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+    },
+    "contractRenewal": {
+      "type": "string",
+      "description": "Date when the current contract is up for renewal",
+      "format": "date"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags associated with this client",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the client"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Date when the client record was created",
+      "format": "date"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Date when the client record was last updated",
+      "format": "date"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "id": 1,
+      "name": "Acme Corporation",
+      "industry": "Technology",
+      "location": "San Francisco, CA",
+      "revenue": "$25M",
+      "employees": 120,
+      "website": "https://acme-example.com",
+      "founded": 2005,
+      "status": "Active",
+      "description": "Provider of cloud-based enterprise software solutions",
+      "headquarters": "123 Tech Lane, San Francisco, CA 94105",
+      "ceo": "Jane Smith",
+      "stockSymbol": "ACME",
+      "yearlyGrowth": 15,
+      "customerSegment": "Enterprise",
+      "keyProducts": ["Cloud ERP", "Analytics Platform", "Integration Services"],
+      "mainCompetitors": ["Oracle", "SAP", "Microsoft"],
+      "lastContactDate": "2023-11-18",
+      "accountManager": "John Davis",
+      "contractValue": "$250,000",
+      "contractRenewal": "2024-06-30",
+      "tags": ["enterprise", "cloud", "fast-growth"],
+      "notes": "Strategic account with expansion opportunities in their international divisions.",
+      "createdAt": "2020-03-15",
+      "updatedAt": "2023-11-18"
+    }
+  ]
+}

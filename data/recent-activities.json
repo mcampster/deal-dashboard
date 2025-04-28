@@ -1,0 +1,26 @@
+{
+  "id": "recent-activities",
+  "label": "Recent Activities",
+  "icon": "calendar",
+  "description": "View your most recent activities",
+  "entity": "activities",
+  "columns": [
+    { "key": "title", "label": "Title", "type": "text", "field": "title" },
+    { "key": "type", "label": "Type", "type": "text", "field": "type" },
+    { "key": "date", "label": "Date", "type": "date", "field": "date" },
+    { "key": "status", "label": "Status", "type": "text", "field": "status" },
+    { "key": "relatedTo", "label": "Related To", "type": "company", "icon": "building", "field": "relatedTo" }
+  ],
+  "actions": [
+    { "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "sort": [
+    {
+      "field": "date",
+      "direction": "desc",
+      "label": "Most recent first"
+    }
+  ],
+  "limit": 5
+}

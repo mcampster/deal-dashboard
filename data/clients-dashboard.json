@@ -1,0 +1,117 @@
+{
+  "id": "clients-dashboard",
+  "label": "Clients Dashboard",
+  "icon": "building",
+  "type": "dashboard",
+  "description": "Overview of client portfolio and key metrics",
+  "actions": [{ "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+  "widgets": [
+    {
+      "id": "total-clients",
+      "type": "metric",
+      "title": "Total Clients",
+      "width": "quarter",
+      "entity": "clients",
+      "metricField": "count",
+      "metricFormat": "number",
+      "metricIcon": "building"
+    },
+    {
+      "id": "total-revenue",
+      "type": "metric",
+      "title": "Total Client Revenue",
+      "width": "quarter",
+      "entity": "clients",
+      "metricField": "sum:revenue",
+      "metricFormat": "currency",
+      "metricIcon": "dollar"
+    },
+    {
+      "id": "average-revenue",
+      "type": "metric",
+      "title": "Average Revenue",
+      "width": "quarter",
+      "entity": "clients",
+      "metricField": "avg:revenue",
+      "metricFormat": "currency",
+      "metricIcon": "dollar"
+    },
+    {
+      "id": "largest-client",
+      "type": "metric",
+      "title": "Largest Client",
+      "width": "quarter",
+      "entity": "clients",
+      "metricField": "max:revenue",
+      "metricFormat": "currency",
+      "metricIcon": "dollar"
+    },
+    {
+      "id": "clients-by-industry",
+      "type": "chart",
+      "title": "Clients by Industry",
+      "width": "half",
+      "height": "medium",
+      "entity": "clients",
+      "chartType": "pie",
+      "fields": ["industry", "revenue"]
+    },
+    {
+      "id": "top-clients",
+      "type": "table",
+      "title": "Top Clients by Revenue",
+      "width": "half",
+      "height": "large",
+      "entity": "clients",
+      "columns": [
+        { "key": "name", "label": "Company Name", "type": "text", "field": "name" },
+        { "key": "industry", "label": "Industry", "type": "industry", "icon": "briefcase", "field": "industry" },
+        { "key": "revenue", "label": "Annual Revenue", "type": "currency", "field": "revenue" }
+      ],
+      "sort": [{ "field": "revenue", "direction": "desc" }],
+      "limit": 5
+    },
+    {
+      "id": "clients-by-location",
+      "type": "chart",
+      "title": "Clients by Location",
+      "width": "third",
+      "height": "medium",
+      "entity": "clients",
+      "chartType": "bar",
+      "fields": ["location", "revenue"]
+    },
+    {
+      "id": "tech-clients",
+      "type": "table",
+      "title": "Technology Clients",
+      "width": "third",
+      "height": "large",
+      "entity": "clients",
+      "columns": [
+        { "key": "name", "label": "Company Name", "type": "text", "field": "name" },
+        { "key": "location", "label": "Location", "type": "location", "icon": "mapPin", "field": "location" },
+        { "key": "revenue", "label": "Revenue", "type": "currency", "field": "revenue" }
+      ],
+      "filters": [{ "field": "industry", "operator": "=", "value": "Technology" }],
+      "sort": [{ "field": "revenue", "direction": "desc" }],
+      "limit": 5
+    },
+    {
+      "id": "client-details",
+      "type": "card",
+      "title": "Largest Client Details",
+      "width": "third",
+      "height": "medium",
+      "entity": "clients",
+      "fields": ["name", "industry", "location", "revenue"],
+      "sort": [{ "field": "revenue", "direction": "desc" }],
+      "limit": 1,
+      "actions": [
+        { "id": "view-details", "label": "View Details", "icon": "building", "type": "primary" },
+        { "id": "edit", "label": "Edit", "icon": "edit", "type": "secondary" },
+        { "id": "view-deals", "label": "View Deals", "icon": "dollar", "type": "secondary" }
+      ]
+    }
+  ]
+}

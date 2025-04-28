@@ -1,0 +1,111 @@
+{
+  "id": "investment-banking-dashboard",
+  "label": "Investment Banking Dashboard",
+  "icon": "bar-chart-2",
+  "description": "Overview of all investment banking deals and activities",
+  "type": "dashboard",
+  "entity": "deals",
+  "widgets": [
+    {
+      "id": "total-deal-value",
+      "title": "Total Deal Value",
+      "type": "metric",
+      "entity": "deals",
+      "metricField": "sum:value",
+      "metricFormat": "currency",
+      "width": "quarter",
+      "height": "1x"
+    },
+    {
+      "id": "deals-by-phase",
+      "title": "Deals by Phase",
+      "type": "chart",
+      "entity": "deals",
+      "chartType": "donut",
+      "fields": ["phase", "value"],
+      "width": "quarter",
+      "height": "2x"
+    },
+    {
+      "id": "deals-by-status",
+      "title": "Deals by Status",
+      "type": "chart",
+      "entity": "deals",
+      "chartType": "bar",
+      "fields": ["status", "value"],
+      "width": "half",
+      "height": "2x"
+    },
+    {
+      "id": "recent-deals",
+      "title": "Recent Deals",
+      "type": "table",
+      "entity": "deals",
+      "columns": [
+        {
+          "key": "name",
+          "label": "Deal Name",
+          "field": "name"
+        },
+        {
+          "key": "value",
+          "label": "Value",
+          "field": "value"
+        },
+        {
+          "key": "phase",
+          "label": "Phase",
+          "field": "phase"
+        },
+        {
+          "key": "status",
+          "label": "Status",
+          "field": "status"
+        }
+      ],
+      "filters": [],
+      "sort": [
+        {
+          "field": "createdAt",
+          "direction": "desc"
+        }
+      ],
+      "limit": 5,
+      "width": "half",
+      "height": "2x"
+    },
+    {
+      "id": "high-value-deals",
+      "title": "High Value Deals",
+      "type": "card",
+      "entity": "deals",
+      "fields": ["name", "value", "phase", "clientName"],
+      "filters": [
+        {
+          "field": "value",
+          "operator": "greaterThan",
+          "value": "$500M"
+        }
+      ],
+      "sort": [
+        {
+          "field": "value",
+          "direction": "desc"
+        }
+      ],
+      "limit": 1,
+      "width": "quarter",
+      "height": "2x"
+    },
+    {
+      "id": "deals-by-type",
+      "title": "Deals by Type",
+      "type": "chart",
+      "entity": "deals",
+      "chartType": "pie",
+      "fields": ["dealType", "value"],
+      "width": "quarter",
+      "height": "2x"
+    }
+  ]
+}

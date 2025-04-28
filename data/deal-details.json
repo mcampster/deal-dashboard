@@ -1,0 +1,209 @@
+{
+  "id": "deal-details",
+  "label": "Deal Details",
+  "icon": "dollar",
+  "description": "Detailed view of a deal",
+  "type": "details",
+  "entity": "deals",
+  "actions": [
+    { "id": "edit-deal", "label": "Edit Deal", "icon": "edit", "type": "primary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "detailsConfig": {
+    "primaryFields": [
+      "name",
+      "value",
+      "phase",
+      "status",
+      "clientName",
+      "dealType",
+      "expectedCloseDate",
+      "actualCloseDate",
+      "description",
+      "riskRating",
+      "priority"
+    ],
+    "relatedEntities": [
+      {
+        "id": "origination-details",
+        "title": "Origination Details",
+        "entity": "deals",
+        "relationField": "id",
+        "renderType": "nested-object",
+        "nestedObjectPath": "originationDetails",
+        "columns": [
+          {
+            "key": "dealTeamComplete",
+            "label": "Deal Team Complete",
+            "type": "text",
+            "field": "originationDetails.dealTeamComplete"
+          },
+          {
+            "key": "briberyCheckComplete",
+            "label": "Bribery Check",
+            "type": "text",
+            "field": "originationDetails.briberyCheckComplete"
+          },
+          {
+            "key": "sanctionsCheckComplete",
+            "label": "Sanctions Check",
+            "type": "text",
+            "field": "originationDetails.sanctionsCheckComplete"
+          },
+          {
+            "key": "conflictClearanceComplete",
+            "label": "Conflict Clearance",
+            "type": "text",
+            "field": "originationDetails.conflictClearanceComplete"
+          },
+          { "key": "kycComplete", "label": "KYC Complete", "type": "text", "field": "originationDetails.kycComplete" },
+          {
+            "key": "wallCrossingRequestsComplete",
+            "label": "Wall Crossing Requests",
+            "type": "text",
+            "field": "originationDetails.wallCrossingRequestsComplete"
+          },
+          {
+            "key": "approvalDate",
+            "label": "Approval Date",
+            "type": "date",
+            "field": "originationDetails.approvalDate"
+          },
+          {
+            "key": "announcementDate",
+            "label": "Announcement Date",
+            "type": "date",
+            "field": "originationDetails.announcementDate"
+          }
+        ]
+      },
+      {
+        "id": "execution-details",
+        "title": "Execution Details",
+        "entity": "deals",
+        "relationField": "id",
+        "renderType": "nested-object",
+        "nestedObjectPath": "executionDetails",
+        "columns": [
+          {
+            "key": "trancheBookId",
+            "label": "Tranche Book ID",
+            "type": "text",
+            "field": "executionDetails.trancheBookId"
+          },
+          { "key": "orderBookId", "label": "Order Book ID", "type": "text", "field": "executionDetails.orderBookId" },
+          { "key": "hedgeBookId", "label": "Hedge Book ID", "type": "text", "field": "executionDetails.hedgeBookId" },
+          { "key": "pricingDate", "label": "Pricing Date", "type": "date", "field": "executionDetails.pricingDate" },
+          {
+            "key": "allocationDate",
+            "label": "Allocation Date",
+            "type": "date",
+            "field": "executionDetails.allocationDate"
+          },
+          {
+            "key": "settlementDate",
+            "label": "Settlement Date",
+            "type": "date",
+            "field": "executionDetails.settlementDate"
+          }
+        ]
+      },
+      {
+        "id": "closeout-details",
+        "title": "Closeout Details",
+        "entity": "deals",
+        "relationField": "id",
+        "renderType": "nested-object",
+        "nestedObjectPath": "closeoutDetails",
+        "columns": [
+          {
+            "key": "totalRevenue",
+            "label": "Total Revenue",
+            "type": "currency",
+            "field": "closeoutDetails.totalRevenue"
+          },
+          {
+            "key": "totalExpenses",
+            "label": "Total Expenses",
+            "type": "currency",
+            "field": "closeoutDetails.totalExpenses"
+          },
+          { "key": "netProfit", "label": "Net Profit", "type": "currency", "field": "closeoutDetails.netProfit" },
+          {
+            "key": "revenueRecognitionDate",
+            "label": "Revenue Recognition Date",
+            "type": "date",
+            "field": "closeoutDetails.revenueRecognitionDate"
+          },
+          {
+            "key": "expenseReconciliationDate",
+            "label": "Expense Reconciliation Date",
+            "type": "date",
+            "field": "closeoutDetails.expenseReconciliationDate"
+          }
+        ]
+      },
+      {
+        "id": "deal-team",
+        "title": "Deal Team",
+        "entity": "dealTeams",
+        "relationField": "dealId",
+        "renderType": "table",
+        "columns": [
+          { "key": "name", "label": "Name", "type": "text", "field": "name" },
+          { "key": "role", "label": "Role", "type": "text", "field": "role" },
+          { "key": "email", "label": "Email", "type": "email", "icon": "mail", "field": "email" },
+          { "key": "phone", "label": "Phone", "type": "phone", "icon": "phone", "field": "phone" },
+          { "key": "department", "label": "Department", "type": "text", "field": "department" },
+          { "key": "assignedDate", "label": "Assigned Date", "type": "date", "field": "assignedDate" }
+        ],
+        "actions": [{ "id": "add-team-member", "label": "Add Team Member", "icon": "plus", "type": "primary" }]
+      },
+      {
+        "id": "related-books",
+        "title": "Books",
+        "entity": "books",
+        "relationField": "dealId",
+        "renderType": "table",
+        "columns": [
+          { "key": "name", "label": "Book Name", "type": "text", "field": "name" },
+          { "key": "type", "label": "Book Type", "type": "text", "field": "type" },
+          { "key": "status", "label": "Status", "type": "text", "field": "status" },
+          { "key": "totalValue", "label": "Total Value", "type": "currency", "field": "totalValue" },
+          { "key": "createdAt", "label": "Created Date", "type": "date", "field": "createdAt" },
+          { "key": "closedAt", "label": "Closed Date", "type": "date", "field": "closedAt" }
+        ],
+        "actions": [{ "id": "add-book", "label": "Add Book", "icon": "plus", "type": "primary" }]
+      },
+      {
+        "id": "related-contacts",
+        "title": "Related Contacts",
+        "entity": "contacts",
+        "relationField": "company",
+        "renderType": "table",
+        "columns": [
+          { "key": "name", "label": "Name", "type": "text", "field": "name" },
+          { "key": "email", "label": "Email", "type": "email", "icon": "mail", "field": "email" },
+          { "key": "phone", "label": "Phone", "type": "phone", "icon": "phone", "field": "phone" }
+        ],
+        "actions": [{ "id": "add-contact", "label": "Add Contact", "icon": "plus", "type": "primary" }]
+      },
+      {
+        "id": "related-activities",
+        "title": "Activities",
+        "entity": "activities",
+        "relationField": "relatedTo",
+        "renderType": "table",
+        "columns": [
+          { "key": "title", "label": "Title", "type": "text", "field": "title" },
+          { "key": "type", "label": "Type", "type": "text", "field": "type" },
+          { "key": "date", "label": "Date", "type": "date", "field": "date" },
+          { "key": "status", "label": "Status", "type": "text", "field": "status" },
+          { "key": "assignedTo", "label": "Assigned To", "type": "text", "field": "assignedTo" }
+        ],
+        "actions": [{ "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" }],
+        "sort": [{ "field": "date", "direction": "desc" }]
+      }
+    ]
+  }
+}

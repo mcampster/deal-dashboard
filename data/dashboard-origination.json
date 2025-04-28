@@ -1,0 +1,49 @@
+{
+  "id": "dashboard-origination",
+  "label": "Origination Dashboard",
+  "icon": "briefcase",
+  "description": "Track deal pipeline in the origination phase",
+  "type": "dashboard",
+  "entity": "deals",
+  "actions": [{ "id": "refresh-dashboard", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+  "widgets": [
+    {
+      "id": "open-origination-deals",
+      "type": "metric",
+      "title": "Open Origination Deals",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "count",
+      "filters": [{ "field": "phase", "operator": "equals", "value": "Origination" }],
+      "metricFormat": "number",
+      "metricIcon": "briefcase"
+    },
+    {
+      "id": "pipeline-by-status",
+      "type": "chart",
+      "title": "Origination Pipeline by Status",
+      "width": "half",
+      "height": "medium",
+      "entity": "deals",
+      "chartType": "bar",
+      "fields": ["status", "id"],
+      "filters": [{ "field": "phase", "operator": "equals", "value": "Origination" }]
+    },
+    {
+      "id": "upcoming-closings",
+      "type": "table",
+      "title": "Upcoming Closings",
+      "width": "full",
+      "height": "large",
+      "entity": "deals",
+      "columns": [
+        { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+        { "key": "clientName", "label": "Client", "type": "company", "field": "clientName" },
+        { "key": "expectedCloseDate", "label": "Expected Close", "type": "date", "field": "expectedCloseDate" }
+      ],
+      "filters": [{ "field": "phase", "operator": "equals", "value": "Origination" }],
+      "sort": [{ "field": "expectedCloseDate", "direction": "asc" }],
+      "limit": 10
+    }
+  ]
+}

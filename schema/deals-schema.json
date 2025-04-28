@@ -1,0 +1,212 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Deal Schema",
+  "description": "Schema for investment banking deal entities",
+  "type": "object",
+  "required": ["id", "name", "value", "phase", "status", "clientName"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the deal"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the deal",
+      "minLength": 1
+    },
+    "value": {
+      "type": "string",
+      "description": "Monetary value of the deal",
+      "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+    },
+    "phase": {
+      "type": "string",
+      "description": "Current phase of the deal",
+      "enum": ["Origination", "Execution", "Closeout"]
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status within the phase",
+      "enum": [
+        "Initial Review",
+        "Due Diligence",
+        "Approval Pending",
+        "Approved",
+        "Announced",
+        "Book Building",
+        "Pricing",
+        "Allocation",
+        "Settlement",
+        "Revenue Recognition",
+        "Expense Reconciliation",
+        "Completed"
+      ]
+    },
+    "clientName": {
+      "type": "string",
+      "description": "Name of the client company"
+    },
+    "dealType": {
+      "type": "string",
+      "description": "Type of investment banking deal",
+      "enum": ["M&A", "IPO", "Debt Issuance", "Equity Offering", "Restructuring", "Advisory"]
+    },
+    "expectedCloseDate": {
+      "type": "string",
+      "description": "Expected close date of the deal",
+      "format": "date"
+    },
+    "actualCloseDate": {
+      "type": "string",
+      "description": "Actual close date of the deal",
+      "format": "date"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the deal"
+    },
+    "originationDetails": {
+      "type": "object",
+      "description": "Details about the origination phase",
+      "properties": {
+        "dealTeamComplete": {
+          "type": "boolean",
+          "description": "Whether the deal team is complete"
+        },
+        "briberyCheckComplete": {
+          "type": "boolean",
+          "description": "Whether the bribery check is complete"
+        },
+        "sanctionsCheckComplete": {
+          "type": "boolean",
+          "description": "Whether the sanctions check is complete"
+        },
+        "conflictClearanceComplete": {
+          "type": "boolean",
+          "description": "Whether the conflict clearance is complete"
+        },
+        "kycComplete": {
+          "type": "boolean",
+          "description": "Whether the KYC process is complete"
+        },
+        "wallCrossingRequestsComplete": {
+          "type": "boolean",
+          "description": "Whether the wall crossing requests are complete"
+        },
+        "approvalDate": {
+          "type": "string",
+          "description": "Date when the deal was approved",
+          "format": "date"
+        },
+        "announcementDate": {
+          "type": "string",
+          "description": "Date when the deal was announced",
+          "format": "date"
+        }
+      }
+    },
+    "executionDetails": {
+      "type": "object",
+      "description": "Details about the execution phase",
+      "properties": {
+        "trancheBookId": {
+          "type": "integer",
+          "description": "ID of the associated tranche book"
+        },
+        "orderBookId": {
+          "type": "integer",
+          "description": "ID of the associated order book"
+        },
+        "hedgeBookId": {
+          "type": "integer",
+          "description": "ID of the associated hedge book"
+        },
+        "pricingDate": {
+          "type": "string",
+          "description": "Date of pricing",
+          "format": "date"
+        },
+        "allocationDate": {
+          "type": "string",
+          "description": "Date of allocation",
+          "format": "date"
+        },
+        "settlementDate": {
+          "type": "string",
+          "description": "Date of settlement",
+          "format": "date"
+        }
+      }
+    },
+    "closeoutDetails": {
+      "type": "object",
+      "description": "Details about the closeout phase",
+      "properties": {
+        "totalRevenue": {
+          "type": "string",
+          "description": "Total revenue from the deal",
+          "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+        },
+        "totalExpenses": {
+          "type": "string",
+          "description": "Total expenses for the deal",
+          "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+        },
+        "netProfit": {
+          "type": "string",
+          "description": "Net profit from the deal",
+          "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+        },
+        "revenueRecognitionDate": {
+          "type": "string",
+          "description": "Date of revenue recognition",
+          "format": "date"
+        },
+        "expenseReconciliationDate": {
+          "type": "string",
+          "description": "Date of expense reconciliation",
+          "format": "date"
+        }
+      }
+    },
+    "dealTeamIds": {
+      "type": "array",
+      "description": "IDs of team members assigned to the deal",
+      "items": {
+        "type": "integer"
+      }
+    },
+    "riskRating": {
+      "type": "string",
+      "description": "Risk rating of the deal",
+      "enum": ["Low", "Medium", "High"]
+    },
+    "priority": {
+      "type": "string",
+      "description": "Priority level of the deal",
+      "enum": ["Low", "Medium", "High"]
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Date when the deal was created",
+      "format": "date"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Date when the deal was last updated",
+      "format": "date"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags associated with this deal",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the deal"
+    }
+  },
+  "additionalProperties": false
+}

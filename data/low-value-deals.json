@@ -1,0 +1,79 @@
+{
+  "id": "low-value-deals",
+  "label": "Low Value Deals",
+  "icon": "trending-down",
+  "description": "View deals with low monetary value",
+  "entity": "deals",
+  "columns": [
+    {
+      "key": "name",
+      "label": "Deal Name",
+      "type": "text",
+      "field": "name",
+      "filterable": true
+    },
+    {
+      "key": "clientName",
+      "label": "Client",
+      "type": "company",
+      "icon": "building",
+      "field": "clientName",
+      "filterable": true
+    },
+    {
+      "key": "value",
+      "label": "Value",
+      "type": "currency",
+      "field": "value",
+      "filterable": true
+    },
+    {
+      "key": "phase",
+      "label": "Phase",
+      "type": "text",
+      "field": "phase",
+      "filterable": true
+    },
+    {
+      "key": "expectedCloseDate",
+      "label": "Expected Close Date",
+      "type": "date",
+      "field": "expectedCloseDate"
+    },
+    {
+      "key": "dealType",
+      "label": "Deal Type",
+      "type": "text",
+      "field": "dealType",
+      "filterable": true
+    }
+  ],
+  "actions": [
+    {
+      "id": "new-deal",
+      "label": "New Deal",
+      "icon": "plus",
+      "type": "primary"
+    },
+    {
+      "id": "export",
+      "label": "Export",
+      "icon": "download",
+      "type": "secondary"
+    }
+  ],
+  "filters": [
+    {
+      "field": "value",
+      "operator": "lessThan",
+      "value": "$1M",
+      "label": "Value < $1M"
+    }
+  ],
+  "sort": [
+    {
+      "field": "value",
+      "direction": "asc"
+    }
+  ]
+}

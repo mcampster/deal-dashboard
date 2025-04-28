@@ -1,0 +1,123 @@
+{
+  "id": "sales-dashboard",
+  "label": "Sales Dashboard",
+  "icon": "chart",
+  "type": "dashboard",
+  "description": "Overview of sales performance and key metrics",
+  "actions": [{ "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+  "widgets": [
+    {
+      "id": "total-revenue",
+      "type": "metric",
+      "title": "Total Revenue",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "sum:value",
+      "metricFormat": "currency",
+      "metricIcon": "dollar",
+      "filters": [{ "field": "stage", "operator": "=", "value": "Closed Won" }]
+    },
+    {
+      "id": "average-deal-size",
+      "type": "metric",
+      "title": "Average Deal Size",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "avg:value",
+      "metricFormat": "currency",
+      "metricIcon": "dollar"
+    },
+    {
+      "id": "deals-in-pipeline",
+      "type": "metric",
+      "title": "Deals in Pipeline",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "count",
+      "metricFormat": "number",
+      "metricIcon": "briefcase",
+      "filters": [{ "field": "stage", "operator": "!=", "value": "Closed Won" }]
+    },
+    {
+      "id": "largest-deal",
+      "type": "metric",
+      "title": "Largest Deal",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "max:value",
+      "metricFormat": "currency",
+      "metricIcon": "dollar"
+    },
+    {
+      "id": "recent-deals",
+      "type": "table",
+      "title": "Recent Deals",
+      "width": "half",
+      "height": "large",
+      "entity": "deals",
+      "columns": [
+        { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+        { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+        { "key": "stage", "label": "Stage", "type": "text", "field": "stage" }
+      ],
+      "sort": [{ "field": "closeDate", "direction": "desc" }],
+      "limit": 5
+    },
+    {
+      "id": "high-value-deals",
+      "type": "table",
+      "title": "High Value Deals",
+      "width": "half",
+      "height": "large",
+      "entity": "deals",
+      "columns": [
+        { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+        { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+        { "key": "stage", "label": "Stage", "type": "text", "field": "stage" }
+      ],
+      "filters": [{ "field": "value", "operator": ">", "value": "$100,000" }],
+      "sort": [{ "field": "value", "direction": "desc" }],
+      "limit": 5
+    },
+    {
+      "id": "deals-by-stage",
+      "type": "chart",
+      "title": "Deals by Stage",
+      "width": "third",
+      "height": "medium",
+      "entity": "deals",
+      "chartType": "pie",
+      "fields": ["stage", "value"]
+    },
+    {
+      "id": "top-client",
+      "type": "card",
+      "title": "Top Client",
+      "width": "third",
+      "height": "medium",
+      "entity": "clients",
+      "fields": ["name", "industry", "location", "revenue"],
+      "sort": [{ "field": "revenue", "direction": "desc" }],
+      "limit": 1,
+      "actions": [
+        { "id": "view-details", "label": "View Details", "icon": "user", "type": "primary" },
+        { "id": "contact", "label": "Contact", "icon": "mail", "type": "secondary" }
+      ]
+    },
+    {
+      "id": "recent-contact",
+      "type": "card",
+      "title": "Most Recent Contact",
+      "width": "third",
+      "height": "medium",
+      "entity": "contacts",
+      "fields": ["name", "email", "phone", "company"],
+      "limit": 1,
+      "actions": [
+        { "id": "view-profile", "label": "View Profile", "icon": "user", "type": "primary" },
+        { "id": "send-email", "label": "Send Email", "icon": "mail", "type": "secondary" },
+        { "id": "call", "label": "Call", "icon": "phone", "type": "secondary" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "id": "contact-details",
+  "label": "Contact Details",
+  "icon": "user",
+  "description": "Detailed view of a contact",
+  "type": "details",
+  "entity": "contacts",
+  "actions": [
+    { "id": "edit-contact", "label": "Edit Contact", "icon": "edit", "type": "primary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "detailsConfig": {
+    "primaryFields": ["name", "email", "phone", "company"],
+    "relatedEntities": [
+      {
+        "id": "related-deals",
+        "title": "Deals",
+        "entity": "deals",
+        "relationField": "company",
+        "columns": [
+          { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+          { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+          { "key": "stage", "label": "Stage", "type": "text", "field": "stage" },
+          { "key": "closeDate", "label": "Close Date", "type": "date", "field": "closeDate" }
+        ],
+        "actions": [{ "id": "add-deal", "label": "Add Deal", "icon": "plus", "type": "primary" }]
+      },
+      {
+        "id": "related-activities",
+        "title": "Activities",
+        "entity": "activities",
+        "relationField": "assignedTo",
+        "columns": [
+          { "key": "title", "label": "Title", "type": "text", "field": "title" },
+          { "key": "type", "label": "Type", "type": "text", "field": "type" },
+          { "key": "date", "label": "Date", "type": "date", "field": "date" },
+          { "key": "status", "label": "Status", "type": "text", "field": "status" },
+          { "key": "relatedTo", "label": "Related To", "type": "company", "icon": "building", "field": "relatedTo" }
+        ],
+        "actions": [{ "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" }],
+        "sort": [{ "field": "date", "direction": "desc" }]
+      }
+    ]
+  }
+}

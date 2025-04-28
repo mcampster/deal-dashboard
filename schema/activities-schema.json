@@ -1,0 +1,136 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Activity Schema",
+  "description": "Schema for activity entities in the dataset viewer",
+  "type": "object",
+  "required": ["id", "title", "type", "date", "status", "relatedTo"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the activity"
+    },
+    "title": {
+      "type": "string",
+      "description": "Title of the activity",
+      "minLength": 1
+    },
+    "type": {
+      "type": "string",
+      "description": "Type of activity",
+      "enum": ["Meeting", "Call", "Task", "Email", "Other"]
+    },
+    "date": {
+      "type": "string",
+      "description": "Date of the activity",
+      "format": "date"
+    },
+    "status": {
+      "type": "string",
+      "description": "Current status of the activity",
+      "enum": ["Scheduled", "In Progress", "Completed", "Canceled", "Pending"]
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the activity"
+    },
+    "relatedTo": {
+      "type": "string",
+      "description": "Entity this activity is related to (company, contact, or deal name)"
+    },
+    "assignedTo": {
+      "type": "string",
+      "description": "Person assigned to this activity"
+    },
+    "duration": {
+      "type": "string",
+      "description": "Duration of the activity"
+    },
+    "location": {
+      "type": "string",
+      "description": "Location where the activity takes place"
+    },
+    "participants": {
+      "type": "array",
+      "description": "List of participants in the activity",
+      "items": {
+        "type": "string"
+      }
+    },
+    "followUpDate": {
+      "type": "string",
+      "description": "Date for follow-up",
+      "format": "date"
+    },
+    "followUpType": {
+      "type": "string",
+      "description": "Type of follow-up activity"
+    },
+    "priority": {
+      "type": "string",
+      "description": "Priority level of the activity",
+      "enum": ["Low", "Medium", "High", "Critical"]
+    },
+    "outcome": {
+      "type": ["string", "null"],
+      "description": "Outcome of the activity"
+    },
+    "nextSteps": {
+      "type": "string",
+      "description": "Next steps after this activity"
+    },
+    "attachments": {
+      "type": "array",
+      "description": "List of attachments related to this activity",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags associated with this activity",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdBy": {
+      "type": "string",
+      "description": "Person who created this activity"
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Date when the activity was created",
+      "format": "date"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Date when the activity was last updated",
+      "format": "date"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "id": 1,
+      "title": "Initial Meeting",
+      "type": "Meeting",
+      "date": "2023-11-15",
+      "status": "Completed",
+      "notes": "Discussed project requirements and timeline. Client is interested in our enterprise solution but has concerns about implementation timeline.",
+      "relatedTo": "Acme Corp",
+      "assignedTo": "John Smith",
+      "duration": "60 min",
+      "location": "Client Office",
+      "participants": ["Jane Doe", "Robert Johnson", "Michael Williams"],
+      "followUpDate": "2023-11-22",
+      "followUpType": "Call",
+      "priority": "High",
+      "outcome": "Positive",
+      "nextSteps": "Prepare detailed implementation timeline and resource allocation plan",
+      "attachments": ["meeting_notes.pdf", "requirements.docx"],
+      "tags": ["initial", "requirements", "enterprise"],
+      "createdBy": "Sarah Johnson",
+      "createdAt": "2023-11-14",
+      "updatedAt": "2023-11-15"
+    }
+  ]
+}

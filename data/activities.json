@@ -1,0 +1,28 @@
+{
+  "id": "activities",
+  "label": "Activities",
+  "icon": "calendar",
+  "description": "Track and manage your meetings, calls, and tasks",
+  "entity": "activities",
+  "columns": [
+    { "key": "title", "label": "Title", "type": "text", "field": "title", "filterable": true },
+    { "key": "type", "label": "Type", "type": "text", "field": "type", "filterable": true },
+    { "key": "date", "label": "Date", "type": "date", "field": "date", "filterable": true },
+    { "key": "status", "label": "Status", "type": "text", "field": "status", "filterable": true },
+    {
+      "key": "relatedTo",
+      "label": "Related To",
+      "type": "company",
+      "icon": "building",
+      "field": "relatedTo",
+      "filterable": true
+    },
+    { "key": "assignedTo", "label": "Assigned To", "type": "text", "field": "assignedTo", "filterable": true }
+  ],
+  "actions": [
+    { "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" },
+    { "id": "import-activities", "label": "Import Activities", "icon": "upload", "type": "secondary" },
+    { "id": "export-activities", "label": "Export Activities", "icon": "download", "type": "secondary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ]
+}

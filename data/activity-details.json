@@ -1,0 +1,16 @@
+{
+  "id": "activity-details",
+  "label": "Activity Details",
+  "icon": "calendar",
+  "description": "Detailed view of an activity",
+  "type": "details",
+  "entity": "activities",
+  "actions": [
+    { "id": "edit-activity", "label": "Edit Activity", "icon": "edit", "type": "primary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "detailsConfig": {
+    "primaryFields": ["title", "type", "date", "status", "relatedTo", "assignedTo", "notes"],
+    "relatedEntities": []
+  }
+}

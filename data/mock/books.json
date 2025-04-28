@@ -1,0 +1,262 @@
+[
+  {
+    "id": 1,
+    "type": "Tranche",
+    "dealId": 1,
+    "name": "Acme IPO - Common Stock",
+    "status": "Open",
+    "createdAt": "2023-10-15",
+    "closedAt": null,
+    "totalValue": "$200M",
+    "entries": [
+      {
+        "id": 1,
+        "counterparty": "Fidelity Investments",
+        "amount": "$50M",
+        "timestamp": "2023-11-10T14:30:00Z",
+        "notes": "Anchor investor"
+      },
+      {
+        "id": 2,
+        "counterparty": "BlackRock",
+        "amount": "$40M",
+        "timestamp": "2023-11-11T10:15:00Z",
+        "notes": "Long-term investor"
+      },
+      {
+        "id": 3,
+        "counterparty": "Vanguard Group",
+        "amount": "$35M",
+        "timestamp": "2023-11-12T09:45:00Z",
+        "notes": "Institutional allocation"
+      }
+    ],
+    "notes": "Primary tranche for common stock"
+  },
+  {
+    "id": 2,
+    "type": "Order",
+    "dealId": 1,
+    "name": "Acme IPO - Order Book",
+    "status": "Open",
+    "createdAt": "2023-10-20",
+    "closedAt": null,
+    "totalValue": "$350M",
+    "entries": [
+      {
+        "id": 4,
+        "counterparty": "Fidelity Investments",
+        "amount": "$75M",
+        "timestamp": "2023-11-10T14:35:00Z",
+        "notes": "Increased order"
+      },
+      {
+        "id": 5,
+        "counterparty": "BlackRock",
+        "amount": "$60M",
+        "timestamp": "2023-11-11T10:20:00Z",
+        "notes": "Firm order"
+      },
+      {
+        "id": 6,
+        "counterparty": "Vanguard Group",
+        "amount": "$50M",
+        "timestamp": "2023-11-12T09:50:00Z",
+        "notes": "Firm order"
+      },
+      {
+        "id": 7,
+        "counterparty": "State Street Global",
+        "amount": "$45M",
+        "timestamp": "2023-11-13T11:30:00Z",
+        "notes": "New order"
+      },
+      {
+        "id": 8,
+        "counterparty": "T. Rowe Price",
+        "amount": "$40M",
+        "timestamp": "2023-11-14T13:15:00Z",
+        "notes": "New order"
+      },
+      {
+        "id": 9,
+        "counterparty": "Capital Group",
+        "amount": "$35M",
+        "timestamp": "2023-11-15T10:45:00Z",
+        "notes": "New order"
+      },
+      {
+        "id": 10,
+        "counterparty": "Wellington Management",
+        "amount": "$30M",
+        "timestamp": "2023-11-16T14:20:00Z",
+        "notes": "New order"
+      },
+      {
+        "id": 11,
+        "counterparty": "Invesco",
+        "amount": "$15M",
+        "timestamp": "2023-11-17T09:10:00Z",
+        "notes": "New order"
+      }
+    ],
+    "notes": "Order book oversubscribed by 1.4x"
+  },
+  {
+    "id": 3,
+    "type": "Hedge",
+    "dealId": 1,
+    "name": "Acme IPO - Hedge Book",
+    "status": "Open",
+    "createdAt": "2023-10-25",
+    "closedAt": null,
+    "totalValue": "$50M",
+    "entries": [
+      {
+        "id": 12,
+        "counterparty": "Morgan Stanley",
+        "amount": "$20M",
+        "timestamp": "2023-11-10T15:00:00Z",
+        "notes": "Market hedge"
+      },
+      {
+        "id": 13,
+        "counterparty": "Goldman Sachs",
+        "amount": "$15M",
+        "timestamp": "2023-11-11T11:30:00Z",
+        "notes": "Sector hedge"
+      },
+      {
+        "id": 14,
+        "counterparty": "JP Morgan",
+        "amount": "$15M",
+        "timestamp": "2023-11-12T10:15:00Z",
+        "notes": "Volatility hedge"
+      }
+    ],
+    "notes": "Hedging strategy for market risk"
+  },
+  {
+    "id": 4,
+    "type": "Tranche",
+    "dealId": 5,
+    "name": "Wayne Enterprises - Common Stock",
+    "status": "Open",
+    "createdAt": "2023-10-01",
+    "closedAt": null,
+    "totalValue": "$250M",
+    "entries": [
+      {
+        "id": 15,
+        "counterparty": "BlackRock",
+        "amount": "$60M",
+        "timestamp": "2023-11-05T13:45:00Z",
+        "notes": "Anchor investor"
+      },
+      {
+        "id": 16,
+        "counterparty": "Fidelity Investments",
+        "amount": "$55M",
+        "timestamp": "2023-11-06T11:20:00Z",
+        "notes": "Long-term investor"
+      },
+      {
+        "id": 17,
+        "counterparty": "Vanguard Group",
+        "amount": "$50M",
+        "timestamp": "2023-11-07T10:30:00Z",
+        "notes": "Institutional allocation"
+      },
+      {
+        "id": 18,
+        "counterparty": "State Street Global",
+        "amount": "$45M",
+        "timestamp": "2023-11-08T14:15:00Z",
+        "notes": "Institutional allocation"
+      },
+      {
+        "id": 19,
+        "counterparty": "T. Rowe Price",
+        "amount": "$40M",
+        "timestamp": "2023-11-09T09:45:00Z",
+        "notes": "Institutional allocation"
+      }
+    ],
+    "notes": "Primary tranche for common stock"
+  },
+  {
+    "id": 5,
+    "type": "Order",
+    "dealId": 5,
+    "name": "Wayne Enterprises - Order Book",
+    "status": "Open",
+    "createdAt": "2023-10-05",
+    "closedAt": null,
+    "totalValue": "$400M",
+    "entries": [
+      {
+        "id": 20,
+        "counterparty": "BlackRock",
+        "amount": "$80M",
+        "timestamp": "2023-11-05T13:50:00Z",
+        "notes": "Increased order"
+      },
+      {
+        "id": 21,
+        "counterparty": "Fidelity Investments",
+        "amount": "$75M",
+        "timestamp": "2023-11-06T11:25:00Z",
+        "notes": "Firm order"
+      },
+      {
+        "id": 22,
+        "counterparty": "Vanguard Group",
+        "amount": "$70M",
+        "timestamp": "2023-11-07T10:35:00Z",
+        "notes": "Firm order"
+      },
+      {
+        "id": 23,
+        "counterparty": "State Street Global",
+        "amount": "$65M",
+        "timestamp": "2023-11-08T14:20:00Z",
+        "notes": "Firm order"
+      },
+      {
+        "id": 24,
+        "counterparty": "T. Rowe Price",
+        "amount": "$60M",
+        "timestamp": "2023-11-09T09:50:00Z",
+        "notes": "Firm order"
+      },
+      {
+        "id": 25,
+        "counterparty": "Capital Group",
+        "amount": "$50M",
+        "timestamp": "2023-11-10T15:30:00Z",
+        "notes": "New order"
+      }
+    ],
+    "notes": "Order book oversubscribed by 1.25x"
+  },
+  {
+    "id": 6,
+    "type": "Order",
+    "dealId": 8,
+    "name": "LexCorp M&A - Order Book",
+    "status": "Closed",
+    "createdAt": "2023-09-15",
+    "closedAt": "2023-11-15",
+    "totalValue": "$1.2B",
+    "entries": [
+      {
+        "id": 26,
+        "counterparty": "LexCorp",
+        "amount": "$1.2B",
+        "timestamp": "2023-11-15T10:00:00Z",
+        "notes": "Final acquisition price"
+      }
+    ],
+    "notes": "Acquisition order book"
+  }
+]

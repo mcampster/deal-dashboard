@@ -1,0 +1,51 @@
+{
+  "id": "contacts-master-details",
+  "label": "Contacts Master-Details",
+  "icon": "user",
+  "type": "master-details",
+  "description": "Browse contacts with detailed information",
+  "entity": "contacts",
+  "columns": [
+    { "key": "name", "label": "Name", "type": "text", "field": "name" },
+    { "key": "company", "label": "Company", "type": "company", "field": "company" },
+    { "key": "email", "label": "Email", "type": "email", "field": "email" },
+    { "key": "phone", "label": "Phone", "type": "phone", "field": "phone" }
+  ],
+  "actions": [
+    { "id": "add-contact", "label": "Add Contact", "icon": "plus", "type": "primary" },
+    { "id": "export-contacts", "label": "Export Contacts", "icon": "download", "type": "secondary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "detailsConfig": {
+    "primaryFields": ["name", "email", "phone", "company"],
+    "relatedEntities": [
+      {
+        "id": "related-deals",
+        "title": "Deals",
+        "entity": "deals",
+        "relationField": "company",
+        "columns": [
+          { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+          { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+          { "key": "stage", "label": "Stage", "type": "text", "field": "stage" },
+          { "key": "closeDate", "label": "Close Date", "type": "date", "field": "closeDate" }
+        ],
+        "actions": [{ "id": "add-deal", "label": "Add Deal", "icon": "plus", "type": "primary" }]
+      },
+      {
+        "id": "related-activities",
+        "title": "Activities",
+        "entity": "activities",
+        "relationField": "assignedTo",
+        "columns": [
+          { "key": "title", "label": "Title", "type": "text", "field": "title" },
+          { "key": "type", "label": "Type", "type": "text", "field": "type" },
+          { "key": "date", "label": "Date", "type": "date", "field": "date" },
+          { "key": "status", "label": "Status", "type": "text", "field": "status" }
+        ],
+        "actions": [{ "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" }],
+        "sort": [{ "field": "date", "direction": "desc" }]
+      }
+    ]
+  }
+}

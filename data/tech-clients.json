@@ -1,0 +1,19 @@
+{
+  "id": "tech-clients",
+  "label": "Technology Clients",
+  "icon": "building",
+  "description": "Clients in the Technology industry",
+  "entity": "clients",
+  "columns": [
+    { "key": "name", "label": "Company Name", "type": "text", "field": "name" },
+    { "key": "industry", "label": "Industry", "type": "industry", "icon": "briefcase", "field": "industry" },
+    { "key": "location", "label": "Location", "type": "location", "icon": "mapPin", "field": "location" },
+    { "key": "revenue", "label": "Annual Revenue", "type": "currency", "field": "revenue" }
+  ],
+  "actions": [
+    { "id": "add-client", "label": "Add Client", "icon": "plus", "type": "primary" },
+    { "id": "export-clients", "label": "Export Clients", "icon": "download", "type": "secondary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "filters": [{ "field": "industry", "operator": "=", "value": "Technology", "label": "Technology industry only" }]
+}

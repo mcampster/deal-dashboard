@@ -1,0 +1,93 @@
+{
+  "id": "clients",
+  "label": "All Clients",
+  "icon": "building",
+  "description": "View all clients in the system",
+  "entity": "clients",
+  "columns": [
+    {
+      "key": "name",
+      "label": "Client Name",
+      "type": "company",
+      "icon": "building",
+      "field": "name",
+      "filterable": true
+    },
+    {
+      "key": "industry",
+      "label": "Industry",
+      "type": "industry",
+      "icon": "briefcase",
+      "field": "industry",
+      "filterable": true
+    },
+    {
+      "key": "location",
+      "label": "Location",
+      "type": "location",
+      "icon": "map-pin",
+      "field": "location",
+      "filterable": true
+    },
+    {
+      "key": "revenue",
+      "label": "Annual Revenue",
+      "type": "currency",
+      "field": "revenue",
+      "filterable": true
+    },
+    {
+      "key": "employees",
+      "label": "Employees",
+      "type": "text",
+      "field": "employees"
+    },
+    {
+      "key": "status",
+      "label": "Status",
+      "type": "text",
+      "field": "status",
+      "filterable": true
+    }
+  ],
+  "actions": [
+    {
+      "id": "new-client",
+      "label": "New Client",
+      "icon": "plus",
+      "type": "primary"
+    },
+    {
+      "id": "export",
+      "label": "Export",
+      "icon": "download",
+      "type": "secondary"
+    },
+    {
+      "id": "import",
+      "label": "Import",
+      "icon": "upload",
+      "type": "secondary"
+    }
+  ],
+  "visualizations": [
+    {
+      "field": "industry",
+      "type": "donut",
+      "title": "Clients by Industry",
+      "width": "third"
+    },
+    {
+      "field": "location",
+      "type": "donut",
+      "title": "Clients by Location",
+      "width": "third"
+    },
+    {
+      "field": "status",
+      "type": "donut",
+      "title": "Clients by Status",
+      "width": "third"
+    }
+  ]
+}

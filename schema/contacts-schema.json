@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Contact Schema",
+  "description": "Schema for contact entities in the dataset viewer",
+  "type": "object",
+  "required": ["id", "name", "email", "phone", "company"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the contact",
+      "minimum": 1
+    },
+    "name": {
+      "type": "string",
+      "description": "Full name of the contact",
+      "minLength": 1,
+      "maxLength": 100
+    },
+    "email": {
+      "type": "string",
+      "description": "Email address of the contact",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number of the contact"
+    },
+    "company": {
+      "type": "string",
+      "description": "Company the contact is associated with",
+      "minLength": 1
+    },
+    "title": {
+      "type": "string",
+      "description": "Job title of the contact"
+    },
+    "department": {
+      "type": "string",
+      "description": "Department the contact works in"
+    },
+    "address": {
+      "type": "string",
+      "description": "Physical address of the contact"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the contact"
+    },
+    "lastContactDate": {
+      "type": "string",
+      "description": "Date of last contact with this person",
+      "format": "date"
+    },
+    "birthday": {
+      "type": "string",
+      "description": "Contact's birthday",
+      "format": "date"
+    },
+    "linkedin": {
+      "type": ["string", "null"],
+      "description": "LinkedIn profile URL"
+    },
+    "twitter": {
+      "type": ["string", "null"],
+      "description": "Twitter handle"
+    },
+    "leadSource": {
+      "type": "string",
+      "description": "Source of this contact lead"
+    },
+    "leadStatus": {
+      "type": "string",
+      "description": "Current status of this lead"
+    },
+    "preferredContactMethod": {
+      "type": "string",
+      "description": "Preferred method of communication",
+      "enum": ["Email", "Phone", "Text", "Mail"]
+    },
+    "timezone": {
+      "type": "string",
+      "description": "Contact's timezone"
+    },
+    "tags": {
+      "type": "array",
+      "description": "Tags associated with this contact",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Date when the contact record was created",
+      "format": "date"
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Date when the contact record was last updated",
+      "format": "date"
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "id": 1,
+      "name": "John Smith",
+      "email": "john.smith@example.com",
+      "phone": "(555) 123-4567",
+      "company": "Acme Corp",
+      "title": "CTO",
+      "department": "Information Technology",
+      "address": "123 Tech Lane, San Francisco, CA 94105",
+      "notes": "Prefers email communication. Technical decision maker for all IT projects.",
+      "lastContactDate": "2023-11-18",
+      "birthday": "1975-04-12",
+      "linkedin": "linkedin.com/in/johnsmith",
+      "twitter": "@johnsmith",
+      "leadSource": "Conference",
+      "leadStatus": "Qualified",
+      "preferredContactMethod": "Email",
+      "timezone": "America/Los_Angeles",
+      "tags": ["technical", "decision-maker", "enterprise"],
+      "createdAt": "2022-05-15",
+      "updatedAt": "2023-11-18"
+    }
+  ]
+}

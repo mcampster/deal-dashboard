@@ -1,0 +1,71 @@
+{
+  "id": "recent-deals",
+  "label": "Recent Deals",
+  "icon": "clock",
+  "description": "View recently created or updated deals",
+  "entity": "deals",
+  "columns": [
+    {
+      "key": "name",
+      "label": "Deal Name",
+      "type": "text",
+      "field": "name",
+      "filterable": true
+    },
+    {
+      "key": "clientName",
+      "label": "Client",
+      "type": "company",
+      "icon": "building",
+      "field": "clientName",
+      "filterable": true
+    },
+    {
+      "key": "value",
+      "label": "Value",
+      "type": "currency",
+      "field": "value",
+      "filterable": true
+    },
+    {
+      "key": "phase",
+      "label": "Phase",
+      "type": "text",
+      "field": "phase",
+      "filterable": true
+    },
+    {
+      "key": "createdAt",
+      "label": "Created Date",
+      "type": "date",
+      "field": "createdAt"
+    },
+    {
+      "key": "updatedAt",
+      "label": "Updated Date",
+      "type": "date",
+      "field": "updatedAt"
+    }
+  ],
+  "actions": [
+    {
+      "id": "new-deal",
+      "label": "New Deal",
+      "icon": "plus",
+      "type": "primary"
+    },
+    {
+      "id": "export",
+      "label": "Export",
+      "icon": "download",
+      "type": "secondary"
+    }
+  ],
+  "sort": [
+    {
+      "field": "updatedAt",
+      "direction": "desc"
+    }
+  ],
+  "limit": 20
+}

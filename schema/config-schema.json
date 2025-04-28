@@ -1,0 +1,752 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Dataset Viewer Configuration Schema",
+  "description": "Schema for configuring dataset views, dashboards, and widgets",
+  "type": "object",
+  "definitions": {
+    "iconName": {
+      "type": "string",
+      "description": "Name of an icon from the icon registry",
+      "enum": [
+        "dollar",
+        "user",
+        "building",
+        "mail",
+        "phone",
+        "briefcase",
+        "mapPin",
+        "home",
+        "dashboard",
+        "chart",
+        "settings",
+        "plus",
+        "upload",
+        "download",
+        "edit",
+        "refresh",
+        "archive",
+        "git-merge",
+        "database",
+        "calendar"
+      ]
+    },
+    "columnType": {
+      "type": "string",
+      "description": "Type of column data",
+      "enum": ["text", "currency", "date", "email", "phone", "company", "industry", "location"]
+    },
+    "actionType": {
+      "type": "string",
+      "description": "Type of action (primary or secondary)",
+      "enum": ["primary", "secondary"]
+    },
+    "filterOperator": {
+      "type": "string",
+      "description": "Operator for filter conditions",
+      "enum": [
+        "equals",
+        "notEquals",
+        "contains",
+        "notContains",
+        "greaterThan",
+        "lessThan",
+        "greaterThanOrEquals",
+        "lessThanOrEquals",
+        "=",
+        "!=",
+        ">",
+        "<",
+        ">=",
+        "<=",
+        "in"
+      ]
+    },
+    "sortDirection": {
+      "type": "string",
+      "description": "Direction for sorting (ascending or descending)",
+      "enum": ["asc", "desc"]
+    },
+    "viewType": {
+      "type": "string",
+      "description": "Type of view (list, dashboard, or details)",
+      "enum": ["list", "dashboard", "details"]
+    },
+    "widgetType": {
+      "type": "string",
+      "description": "Type of dashboard widget",
+      "enum": ["table", "chart", "metric", "card"]
+    },
+    "chartType": {
+      "type": "string",
+      "description": "Type of chart for chart widgets",
+      "enum": ["bar", "line", "pie", "donut"]
+    },
+    "widgetWidth": {
+      "type": "string",
+      "description": "Width of the widget in the dashboard grid",
+      "enum": ["full", "half", "third", "quarter"]
+    },
+    "widgetHeight": {
+      "type": "string",
+      "description": "Height of the widget in the dashboard grid",
+      "enum": ["small", "medium", "large"]
+    },
+    "metricFormat": {
+      "type": "string",
+      "description": "Format for metric widgets",
+      "enum": ["currency", "number", "percent"]
+    },
+    "columnConfig": {
+      "type": "object",
+      "description": "Configuration for a table column",
+      "required": ["key", "label", "type", "field"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "description": "Unique identifier for the column"
+        },
+        "label": {
+          "type": "string",
+          "description": "Display label for the column"
+        },
+        "type": {
+          "$ref": "#/definitions/columnType"
+        },
+        "icon": {
+          "$ref": "#/definitions/iconName"
+        },
+        "field": {
+          "type": "string",
+          "description": "Field name in the data source"
+        },
+        "filterable": {
+          "type": "boolean",
+          "description": "Whether this column should appear in the quick filter UI"
+        }
+      }
+    },
+    "actionConfig": {
+      "type": "object",
+      "description": "Configuration for an action button",
+      "required": ["id", "label", "icon", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the action"
+        },
+        "label": {
+          "type": "string",
+          "description": "Display label for the action"
+        },
+        "icon": {
+          "$ref": "#/definitions/iconName"
+        },
+        "type": {
+          "$ref": "#/definitions/actionType"
+        }
+      }
+    },
+    "filterConfig": {
+      "type": "object",
+      "description": "Configuration for a filter condition",
+      "required": ["field", "operator", "value"],
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Field name to filter on"
+        },
+        "operator": {
+          "$ref": "#/definitions/filterOperator"
+        },
+        "value": {
+          "type": ["string", "number", "array"],
+          "description": "Value to filter by (can be a single value or array for multi-select)"
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional human-readable label for the filter"
+        }
+      }
+    },
+    "sortConfig": {
+      "type": "object",
+      "description": "Configuration for sorting",
+      "required": ["field", "direction"],
+      "properties": {
+        "field": {
+          "type": "string",
+          "description": "Field name to sort by"
+        },
+        "direction": {
+          "$ref": "#/definitions/sortDirection"
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional human-readable label for the sort"
+        }
+      }
+    },
+    "relatedEntityConfig": {
+      "type": "object",
+      "description": "Configuration for a related entity section",
+      "required": ["id", "title", "entity", "columns", "relationField"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the related entity section"
+        },
+        "title": {
+          "type": "string",
+          "description": "Display title for the related entity section"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity type for the related data"
+        },
+        "columns": {
+          "type": "array",
+          "description": "Columns to display for the related entities",
+          "items": {
+            "$ref": "#/definitions/columnConfig"
+          }
+        },
+        "relationField": {
+          "type": "string",
+          "description": "Field that relates to the parent entity"
+        },
+        "filters": {
+          "type": "array",
+          "description": "Additional filters to apply",
+          "items": {
+            "$ref": "#/definitions/filterConfig"
+          }
+        },
+        "sort": {
+          "type": "array",
+          "description": "Sort configuration",
+          "items": {
+            "$ref": "#/definitions/sortConfig"
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of related items to display"
+        },
+        "actions": {
+          "type": "array",
+          "description": "Actions available for the related entities",
+          "items": {
+            "$ref": "#/definitions/actionConfig"
+          }
+        }
+      }
+    },
+    "tableWidget": {
+      "type": "object",
+      "description": "Configuration for a table widget",
+      "required": ["id", "type", "title", "width", "entity", "columns"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the widget"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["table"],
+          "description": "Widget type (table)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Display title for the widget"
+        },
+        "width": {
+          "$ref": "#/definitions/widgetWidth"
+        },
+        "height": {
+          "$ref": "#/definitions/widgetHeight"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity name for data source"
+        },
+        "columns": {
+          "type": "array",
+          "description": "Columns to display in the table",
+          "items": {
+            "$ref": "#/definitions/columnConfig"
+          }
+        },
+        "filters": {
+          "type": "array",
+          "description": "Filters to apply to the data",
+          "items": {
+            "$ref": "#/definitions/filterConfig"
+          }
+        },
+        "sort": {
+          "type": "array",
+          "description": "Sort configuration",
+          "items": {
+            "$ref": "#/definitions/sortConfig"
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of rows to display",
+          "minimum": 1
+        }
+      }
+    },
+    "chartWidget": {
+      "type": "object",
+      "description": "Configuration for a chart widget",
+      "required": ["id", "type", "title", "width", "entity", "chartType", "fields"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the widget"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["chart"],
+          "description": "Widget type (chart)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Display title for the widget"
+        },
+        "width": {
+          "$ref": "#/definitions/widgetWidth"
+        },
+        "height": {
+          "$ref": "#/definitions/widgetHeight"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity name for data source"
+        },
+        "chartType": {
+          "$ref": "#/definitions/chartType"
+        },
+        "fields": {
+          "type": "array",
+          "description": "Fields to use for the chart (category, value, etc.)",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "filters": {
+          "type": "array",
+          "description": "Filters to apply to the data",
+          "items": {
+            "$ref": "#/definitions/filterConfig"
+          }
+        },
+        "sort": {
+          "type": "array",
+          "description": "Sort configuration",
+          "items": {
+            "$ref": "#/definitions/sortConfig"
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of data points to display",
+          "minimum": 1
+        },
+        "chartOptions": {
+          "type": "object",
+          "description": "Additional options for the chart"
+        }
+      }
+    },
+    "metricWidget": {
+      "type": "object",
+      "description": "Configuration for a metric widget",
+      "required": ["id", "type", "title", "width", "entity", "metricField"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the widget"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["metric"],
+          "description": "Widget type (metric)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Display title for the widget"
+        },
+        "width": {
+          "$ref": "#/definitions/widgetWidth"
+        },
+        "height": {
+          "$ref": "#/definitions/widgetHeight"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity name for data source"
+        },
+        "metricField": {
+          "type": "string",
+          "description": "Field to use for the metric calculation (can include operations like sum:field, avg:field, count)"
+        },
+        "metricFormat": {
+          "$ref": "#/definitions/metricFormat"
+        },
+        "metricIcon": {
+          "$ref": "#/definitions/iconName"
+        },
+        "filters": {
+          "type": "array",
+          "description": "Filters to apply to the data",
+          "items": {
+            "$ref": "#/definitions/filterConfig"
+          }
+        }
+      }
+    },
+    "cardWidget": {
+      "type": "object",
+      "description": "Configuration for a card widget",
+      "required": ["id", "type", "title", "width", "entity", "fields"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the widget"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["card"],
+          "description": "Widget type (card)"
+        },
+        "title": {
+          "type": "string",
+          "description": "Display title for the widget"
+        },
+        "width": {
+          "$ref": "#/definitions/widgetWidth"
+        },
+        "height": {
+          "$ref": "#/definitions/widgetHeight"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity name for data source"
+        },
+        "fields": {
+          "type": "array",
+          "description": "Fields to display in the card",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "filters": {
+          "type": "array",
+          "description": "Filters to apply to the data",
+          "items": {
+            "$ref": "#/definitions/filterConfig"
+          }
+        },
+        "sort": {
+          "type": "array",
+          "description": "Sort configuration",
+          "items": {
+            "$ref": "#/definitions/sortConfig"
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of cards to display",
+          "minimum": 1
+        },
+        "actions": {
+          "type": "array",
+          "description": "Actions available for the card",
+          "items": {
+            "$ref": "#/definitions/actionConfig"
+          }
+        }
+      }
+    },
+    "widgetConfig": {
+      "oneOf": [
+        { "$ref": "#/definitions/tableWidget" },
+        { "$ref": "#/definitions/chartWidget" },
+        { "$ref": "#/definitions/metricWidget" },
+        { "$ref": "#/definitions/cardWidget" }
+      ]
+    },
+    "listViewConfig": {
+      "type": "object",
+      "description": "Configuration for a list view",
+      "required": ["id", "label", "icon", "description", "type", "entity", "columns", "actions"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the view"
+        },
+        "label": {
+          "type": "string",
+          "description": "Display label for the view"
+        },
+        "icon": {
+          "$ref": "#/definitions/iconName"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the view"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["list"],
+          "description": "View type (list)"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity name for data source"
+        },
+        "columns": {
+          "type": "array",
+          "description": "Columns to display in the list",
+          "items": {
+            "$ref": "#/definitions/columnConfig"
+          },
+          "minItems": 1
+        },
+        "actions": {
+          "type": "array",
+          "description": "Actions available for the list",
+          "items": {
+            "$ref": "#/definitions/actionConfig"
+          }
+        },
+        "filters": {
+          "type": "array",
+          "description": "Filters to apply to the data",
+          "items": {
+            "$ref": "#/definitions/filterConfig"
+          }
+        },
+        "sort": {
+          "type": "array",
+          "description": "Sort configuration",
+          "items": {
+            "$ref": "#/definitions/sortConfig"
+          }
+        },
+        "limit": {
+          "type": "integer",
+          "description": "Maximum number of rows to display",
+          "minimum": 1
+        }
+      }
+    },
+    "dashboardViewConfig": {
+      "type": "object",
+      "description": "Configuration for a dashboard view",
+      "required": ["id", "label", "icon", "description", "type", "actions", "widgets"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the view"
+        },
+        "label": {
+          "type": "string",
+          "description": "Display label for the view"
+        },
+        "icon": {
+          "$ref": "#/definitions/iconName"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the view"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["dashboard"],
+          "description": "View type (dashboard)"
+        },
+        "actions": {
+          "type": "array",
+          "description": "Actions available for the dashboard",
+          "items": {
+            "$ref": "#/definitions/actionConfig"
+          }
+        },
+        "widgets": {
+          "type": "array",
+          "description": "Widgets to display in the dashboard",
+          "items": {
+            "$ref": "#/definitions/widgetConfig"
+          },
+          "minItems": 1
+        }
+      }
+    },
+    "detailsViewConfig": {
+      "type": "object",
+      "description": "Configuration for a details view",
+      "required": ["id", "label", "icon", "description", "type", "entity", "actions", "detailsConfig"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the view"
+        },
+        "label": {
+          "type": "string",
+          "description": "Display label for the view"
+        },
+        "icon": {
+          "$ref": "#/definitions/iconName"
+        },
+        "description": {
+          "type": "string",
+          "description": "Description of the view"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["details"],
+          "description": "View type (details)"
+        },
+        "entity": {
+          "type": "string",
+          "description": "Entity name for data source"
+        },
+        "actions": {
+          "type": "array",
+          "description": "Actions available for the details view",
+          "items": {
+            "$ref": "#/definitions/actionConfig"
+          }
+        },
+        "detailsConfig": {
+          "type": "object",
+          "required": ["primaryFields"],
+          "properties": {
+            "primaryFields": {
+              "type": "array",
+              "description": "Fields to display in the details panel",
+              "items": {
+                "type": "string"
+              }
+            },
+            "relatedEntities": {
+              "type": "array",
+              "description": "Related entities to display",
+              "items": {
+                "$ref": "#/definitions/relatedEntityConfig"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "oneOf": [
+    { "$ref": "#/definitions/listViewConfig" },
+    { "$ref": "#/definitions/dashboardViewConfig" },
+    { "$ref": "#/definitions/detailsViewConfig" }
+  ],
+  "examples": [
+    {
+      "id": "deals",
+      "label": "Deals",
+      "icon": "dollar",
+      "description": "Track and manage your sales pipeline",
+      "type": "list",
+      "entity": "deals",
+      "columns": [
+        { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+        { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+        { "key": "stage", "label": "Stage", "type": "text", "field": "stage" },
+        { "key": "closeDate", "label": "Close Date", "type": "date", "field": "closeDate" }
+      ],
+      "actions": [
+        { "id": "add-deal", "label": "Add Deal", "icon": "plus", "type": "primary" },
+        { "id": "import-deals", "label": "Import Deals", "icon": "upload", "type": "secondary" },
+        { "id": "export-deals", "label": "Export Deals", "icon": "download", "type": "secondary" },
+        { "id": "bulk-edit", "label": "Bulk Edit", "icon": "edit", "type": "secondary" },
+        { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+      ]
+    },
+    {
+      "id": "sales-dashboard",
+      "label": "Sales Dashboard",
+      "icon": "chart",
+      "type": "dashboard",
+      "description": "Overview of sales performance and key metrics",
+      "actions": [{ "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+      "widgets": [
+        {
+          "id": "total-revenue",
+          "type": "metric",
+          "title": "Total Revenue",
+          "width": "quarter",
+          "entity": "deals",
+          "metricField": "sum:value",
+          "metricFormat": "currency",
+          "metricIcon": "dollar",
+          "filters": [{ "field": "stage", "operator": "=", "value": "Closed Won" }]
+        },
+        {
+          "id": "deals-by-stage",
+          "type": "chart",
+          "title": "Deals by Stage",
+          "width": "third",
+          "height": "medium",
+          "entity": "deals",
+          "chartType": "pie",
+          "fields": ["stage", "value"]
+        },
+        {
+          "id": "recent-deals",
+          "type": "table",
+          "title": "Recent Deals",
+          "width": "half",
+          "height": "large",
+          "entity": "deals",
+          "columns": [
+            { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+            { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+            { "key": "stage", "label": "Stage", "type": "text", "field": "stage" }
+          ],
+          "sort": [{ "field": "closeDate", "direction": "desc" }],
+          "limit": 5
+        }
+      ]
+    },
+    {
+      "id": "deal-details",
+      "label": "Deal Details",
+      "icon": "dollar",
+      "description": "Detailed view of a deal",
+      "type": "details",
+      "entity": "deals",
+      "actions": [
+        { "id": "edit-deal", "label": "Edit Deal", "icon": "edit", "type": "primary" },
+        { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+      ],
+      "detailsConfig": {
+        "primaryFields": ["name", "value", "stage", "closeDate", "company"],
+        "relatedEntities": [
+          {
+            "id": "related-contacts",
+            "title": "Related Contacts",
+            "entity": "contacts",
+            "relationField": "company",
+            "columns": [
+              { "key": "name", "label": "Name", "type": "text", "field": "name" },
+              { "key": "email", "label": "Email", "type": "email", "icon": "mail", "field": "email" },
+              { "key": "phone", "label": "Phone", "type": "phone", "icon": "phone", "field": "phone" }
+            ],
+            "actions": [{ "id": "add-contact", "label": "Add Contact", "icon": "plus", "type": "primary" }]
+          }
+        ]
+      }
+    }
+  ]
+}

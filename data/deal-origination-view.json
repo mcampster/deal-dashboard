@@ -1,0 +1,22 @@
+{
+  "id": "deal-origination-view",
+  "label": "Origination Deals",
+  "icon": "briefcase",
+  "description": "Monitor deals in the origination phase",
+  "type": "list",
+  "entity": "deals",
+  "columns": [
+    { "key": "name", "label": "Deal Name", "type": "text", "field": "name", "filterable": true },
+    { "key": "clientName", "label": "Client", "type": "company", "field": "clientName", "filterable": true },
+    { "key": "phase", "label": "Phase", "type": "text", "field": "phase", "filterable": true },
+    { "key": "status", "label": "Status", "type": "text", "field": "status", "filterable": true },
+    { "key": "expectedCloseDate", "label": "Expected Close", "type": "date", "field": "expectedCloseDate" }
+  ],
+  "actions": [
+    { "id": "add-deal", "label": "Add Deal", "icon": "plus", "type": "primary" },
+    { "id": "refresh-deal-list", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "filters": [{ "field": "phase", "operator": "equals", "value": "Origination", "label": "Only Origination Phase" }],
+  "sort": [{ "field": "expectedCloseDate", "direction": "asc" }],
+  "limit": 50
+}

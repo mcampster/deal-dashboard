@@ -1,0 +1,20 @@
+{
+  "id": "deal-teams",
+  "label": "Deal Teams",
+  "icon": "users",
+  "description": "Manage deal team assignments and responsibilities",
+  "entity": "dealTeams",
+  "columns": [
+    { "key": "name", "label": "Name", "type": "text", "field": "name" },
+    { "key": "role", "label": "Role", "type": "text", "field": "role", "filterable": true },
+    { "key": "dealId", "label": "Deal ID", "type": "text", "field": "dealId", "filterable": true },
+    { "key": "email", "label": "Email", "type": "email", "icon": "mail", "field": "email" },
+    { "key": "department", "label": "Department", "type": "text", "field": "department", "filterable": true },
+    { "key": "assignedDate", "label": "Assigned Date", "type": "date", "field": "assignedDate", "filterable": true }
+  ],
+  "actions": [
+    { "id": "add-team-member", "label": "Add Team Member", "icon": "plus", "type": "primary" },
+    { "id": "export-team", "label": "Export Team", "icon": "download", "type": "secondary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ]
+}

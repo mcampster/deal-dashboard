@@ -1,0 +1,27 @@
+{
+  "id": "contacts",
+  "label": "Contacts",
+  "icon": "user",
+  "description": "Manage your customer and prospect contacts",
+  "entity": "contacts",
+  "columns": [
+    { "key": "name", "label": "Name", "type": "text", "field": "name" },
+    { "key": "email", "label": "Email", "type": "email", "icon": "mail", "field": "email" },
+    { "key": "phone", "label": "Phone", "type": "phone", "icon": "phone", "field": "phone" },
+    {
+      "key": "company",
+      "label": "Company",
+      "type": "company",
+      "icon": "building",
+      "field": "company",
+      "filterable": true
+    }
+  ],
+  "actions": [
+    { "id": "add-contact", "label": "Add Contact", "icon": "plus", "type": "primary" },
+    { "id": "import-contacts", "label": "Import Contacts", "icon": "upload", "type": "secondary" },
+    { "id": "export-contacts", "label": "Export Contacts", "icon": "download", "type": "secondary" },
+    { "id": "merge-contacts", "label": "Merge Duplicates", "icon": "git-merge", "type": "secondary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ]
+}

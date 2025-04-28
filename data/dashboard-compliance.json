@@ -1,0 +1,64 @@
+{
+  "id": "dashboard-compliance",
+  "label": "Compliance Dashboard",
+  "icon": "settings",
+  "description": "Track compliance tasks for all active deals",
+  "type": "dashboard",
+  "entity": "deals",
+  "actions": [{ "id": "refresh-dashboard", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+  "widgets": [
+    {
+      "id": "kyc-pending-count",
+      "type": "metric",
+      "title": "Pending KYC Checks",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "count",
+      "filters": [{ "field": "originationDetails.kycComplete", "operator": "equals", "value": false }],
+      "metricFormat": "number",
+      "metricIcon": "settings"
+    },
+    {
+      "id": "compliance-checks-status",
+      "type": "chart",
+      "title": "Compliance Checklist Completion",
+      "width": "half",
+      "height": "medium",
+      "entity": "deals",
+      "chartType": "donut",
+      "fields": ["phase", "id"]
+    },
+    {
+      "id": "non-compliant-deals",
+      "type": "table",
+      "title": "Non-Compliant Deals",
+      "width": "full",
+      "height": "large",
+      "entity": "deals",
+      "columns": [
+        { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+        { "key": "clientName", "label": "Client", "type": "company", "field": "clientName" },
+        {
+          "key": "originationDetails.kycComplete",
+          "label": "KYC",
+          "type": "text",
+          "field": "originationDetails.kycComplete"
+        },
+        {
+          "key": "originationDetails.briberyCheckComplete",
+          "label": "Bribery Check",
+          "type": "text",
+          "field": "originationDetails.briberyCheckComplete"
+        },
+        {
+          "key": "originationDetails.sanctionsCheckComplete",
+          "label": "Sanctions Check",
+          "type": "text",
+          "field": "originationDetails.sanctionsCheckComplete"
+        }
+      ],
+      "filters": [{ "field": "originationDetails.kycComplete", "operator": "equals", "value": false }],
+      "limit": 10
+    }
+  ]
+}

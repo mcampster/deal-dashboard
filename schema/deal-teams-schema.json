@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Deal Team Schema",
+  "description": "Schema for deal team members in investment banking",
+  "type": "object",
+  "required": ["id", "name", "role", "dealId"],
+  "properties": {
+    "id": {
+      "type": "integer",
+      "description": "Unique identifier for the team member"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the team member"
+    },
+    "role": {
+      "type": "string",
+      "description": "Role in the deal team",
+      "enum": ["Lead Banker", "Associate", "Analyst", "Legal", "Compliance", "Risk", "Operations"]
+    },
+    "dealId": {
+      "type": "integer",
+      "description": "ID of the associated deal"
+    },
+    "email": {
+      "type": "string",
+      "description": "Email of the team member",
+      "format": "email"
+    },
+    "phone": {
+      "type": "string",
+      "description": "Phone number of the team member"
+    },
+    "department": {
+      "type": "string",
+      "description": "Department of the team member"
+    },
+    "assignedDate": {
+      "type": "string",
+      "description": "Date when the member was assigned to the deal",
+      "format": "date"
+    },
+    "responsibilities": {
+      "type": "array",
+      "description": "List of responsibilities for this team member",
+      "items": {
+        "type": "string"
+      }
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes about the team member"
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,54 @@
+{
+  "id": "dashboard-syndicate",
+  "label": "Execution Dashboard",
+  "icon": "git-merge",
+  "description": "Manage execution phase deals and key dates",
+  "type": "dashboard",
+  "entity": "deals",
+  "actions": [{ "id": "refresh-dashboard", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+  "widgets": [
+    {
+      "id": "active-execution-deals",
+      "type": "metric",
+      "title": "Deals in Execution",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "count",
+      "filters": [{ "field": "phase", "operator": "equals", "value": "Execution" }],
+      "metricFormat": "number",
+      "metricIcon": "git-merge"
+    },
+    {
+      "id": "pricing-timeline",
+      "type": "chart",
+      "title": "Pricing Timeline",
+      "width": "half",
+      "height": "medium",
+      "entity": "deals",
+      "chartType": "line",
+      "fields": ["executionDetails.pricingDate", "name"],
+      "filters": [{ "field": "phase", "operator": "equals", "value": "Execution" }]
+    },
+    {
+      "id": "upcoming-settlements",
+      "type": "table",
+      "title": "Upcoming Settlements",
+      "width": "full",
+      "height": "large",
+      "entity": "deals",
+      "columns": [
+        { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+        { "key": "clientName", "label": "Client", "type": "company", "field": "clientName" },
+        {
+          "key": "executionDetails.settlementDate",
+          "label": "Settlement Date",
+          "type": "date",
+          "field": "executionDetails.settlementDate"
+        }
+      ],
+      "filters": [{ "field": "phase", "operator": "equals", "value": "Execution" }],
+      "sort": [{ "field": "executionDetails.settlementDate", "direction": "asc" }],
+      "limit": 10
+    }
+  ]
+}

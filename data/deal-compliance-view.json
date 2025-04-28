@@ -1,0 +1,43 @@
+{
+  "id": "deal-compliance-view",
+  "label": "Compliance Review",
+  "icon": "settings",
+  "description": "Review deals for KYC, bribery, and conflict checks",
+  "type": "list",
+  "entity": "deals",
+  "columns": [
+    { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+    { "key": "clientName", "label": "Client", "type": "company", "field": "clientName" },
+    { "key": "phase", "label": "Phase", "type": "text", "field": "phase" },
+    {
+      "key": "originationDetails.kycComplete",
+      "label": "KYC Complete",
+      "type": "text",
+      "field": "originationDetails.kycComplete"
+    },
+    {
+      "key": "originationDetails.briberyCheckComplete",
+      "label": "Bribery Check",
+      "type": "text",
+      "field": "originationDetails.briberyCheckComplete"
+    },
+    {
+      "key": "originationDetails.sanctionsCheckComplete",
+      "label": "Sanctions Check",
+      "type": "text",
+      "field": "originationDetails.sanctionsCheckComplete"
+    },
+    {
+      "key": "originationDetails.conflictClearanceComplete",
+      "label": "Conflict Clearance",
+      "type": "text",
+      "field": "originationDetails.conflictClearanceComplete"
+    }
+  ],
+  "actions": [{ "id": "refresh-deal-list", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+  "filters": [
+    { "field": "originationDetails.kycComplete", "operator": "equals", "value": false, "label": "Pending KYC" }
+  ],
+  "sort": [{ "field": "createdAt", "direction": "desc" }],
+  "limit": 50
+}

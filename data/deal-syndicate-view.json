@@ -1,0 +1,36 @@
+{
+  "id": "deal-syndicate-view",
+  "label": "Execution Deals",
+  "icon": "git-merge",
+  "description": "Manage deals under execution and pricing",
+  "type": "list",
+  "entity": "deals",
+  "columns": [
+    { "key": "name", "label": "Deal Name", "type": "text", "field": "name", "filterable": true },
+    { "key": "clientName", "label": "Client", "type": "company", "field": "clientName" },
+    { "key": "phase", "label": "Phase", "type": "text", "field": "phase" },
+    { "key": "status", "label": "Status", "type": "text", "field": "status" },
+    {
+      "key": "executionDetails.pricingDate",
+      "label": "Pricing Date",
+      "type": "date",
+      "field": "executionDetails.pricingDate"
+    },
+    {
+      "key": "executionDetails.allocationDate",
+      "label": "Allocation Date",
+      "type": "date",
+      "field": "executionDetails.allocationDate"
+    },
+    {
+      "key": "executionDetails.settlementDate",
+      "label": "Settlement Date",
+      "type": "date",
+      "field": "executionDetails.settlementDate"
+    }
+  ],
+  "actions": [{ "id": "refresh-deal-list", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
+  "filters": [{ "field": "phase", "operator": "equals", "value": "Execution", "label": "Execution Phase Only" }],
+  "sort": [{ "field": "executionDetails.pricingDate", "direction": "asc" }],
+  "limit": 50
+}

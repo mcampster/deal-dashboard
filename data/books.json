@@ -1,0 +1,21 @@
+{
+  "id": "books",
+  "label": "Deal Books",
+  "icon": "book",
+  "description": "Manage tranche, order, and hedge books for deals",
+  "entity": "books",
+  "columns": [
+    { "key": "name", "label": "Book Name", "type": "text", "field": "name" },
+    { "key": "type", "label": "Book Type", "type": "text", "field": "type", "filterable": true },
+    { "key": "dealId", "label": "Deal ID", "type": "text", "field": "dealId", "filterable": true },
+    { "key": "status", "label": "Status", "type": "text", "field": "status", "filterable": true },
+    { "key": "totalValue", "label": "Total Value", "type": "currency", "field": "totalValue", "filterable": true },
+    { "key": "createdAt", "label": "Created Date", "type": "date", "field": "createdAt", "filterable": true },
+    { "key": "closedAt", "label": "Closed Date", "type": "date", "field": "closedAt", "filterable": true }
+  ],
+  "actions": [
+    { "id": "add-book", "label": "Add Book", "icon": "plus", "type": "primary" },
+    { "id": "export-books", "label": "Export Books", "icon": "download", "type": "secondary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ]
+}

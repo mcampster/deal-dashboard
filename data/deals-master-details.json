@@ -1,0 +1,50 @@
+{
+  "id": "deals-master-details",
+  "label": "Deals Master-Details",
+  "icon": "dollar",
+  "type": "master-details",
+  "description": "Browse deals with detailed information",
+  "entity": "deals",
+  "columns": [
+    { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+    { "key": "phase", "label": "Phase", "type": "text", "field": "phase" },
+    { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+    { "key": "closeDate", "label": "Close Date", "type": "date", "field": "closeDate" }
+  ],
+  "actions": [
+    { "id": "add-deal", "label": "Add Deal", "icon": "plus", "type": "primary" },
+    { "id": "export-deals", "label": "Export Deals", "icon": "download", "type": "secondary" },
+    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
+  ],
+  "detailsConfig": {
+    "primaryFields": ["name", "value", "phase", "closeDate", "company"],
+    "relatedEntities": [
+      {
+        "id": "related-contacts",
+        "title": "Related Contacts",
+        "entity": "contacts",
+        "relationField": "company",
+        "columns": [
+          { "key": "name", "label": "Name", "type": "text", "field": "name" },
+          { "key": "email", "label": "Email", "type": "email", "icon": "mail", "field": "email" },
+          { "key": "phone", "label": "Phone", "type": "phone", "icon": "phone", "field": "phone" }
+        ],
+        "actions": [{ "id": "add-contact", "label": "Add Contact", "icon": "plus", "type": "primary" }]
+      },
+      {
+        "id": "related-activities",
+        "title": "Activities",
+        "entity": "activities",
+        "relationField": "relatedTo",
+        "columns": [
+          { "key": "title", "label": "Title", "type": "text", "field": "title" },
+          { "key": "type", "label": "Type", "type": "text", "field": "type" },
+          { "key": "date", "label": "Date", "type": "date", "field": "date" },
+          { "key": "status", "label": "Status", "type": "text", "field": "status" }
+        ],
+        "actions": [{ "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" }],
+        "sort": [{ "field": "date", "direction": "desc" }]
+      }
+    ]
+  }
+}
