@@ -23,7 +23,7 @@
       "type": "chart",
       "title": "Origination Pipeline by Status",
       "width": "half",
-      "height": "medium",
+      "height": "2x",
       "entity": "deals",
       "chartType": "bar",
       "fields": ["status", "id"],
@@ -34,7 +34,7 @@
       "type": "table",
       "title": "Upcoming Closings",
       "width": "full",
-      "height": "large",
+      "height": "2x",
       "entity": "deals",
       "columns": [
         { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },

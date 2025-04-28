@@ -14,7 +14,7 @@
       "width": "quarter",
       "entity": "deals",
       "metricField": "count",
-      "filters": [{ "field": "originationDetails.kycComplete", "operator": "equals", "value": false }],
+      "filters": [{ "field": "status", "operator": "equals", "value": "Initial Review" }],
       "metricFormat": "number",
       "metricIcon": "settings"
     },
@@ -23,7 +23,7 @@
       "type": "chart",
       "title": "Compliance Checklist Completion",
       "width": "half",
-      "height": "medium",
+      "height": "2x",
       "entity": "deals",
       "chartType": "donut",
       "fields": ["phase", "id"]
@@ -33,31 +33,15 @@
       "type": "table",
       "title": "Non-Compliant Deals",
       "width": "full",
-      "height": "large",
+      "height": "2x",
       "entity": "deals",
       "columns": [
         { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
         { "key": "clientName", "label": "Client", "type": "company", "field": "clientName" },
-        {
-          "key": "originationDetails.kycComplete",
-          "label": "KYC",
-          "type": "text",
-          "field": "originationDetails.kycComplete"
-        },
-        {
-          "key": "originationDetails.briberyCheckComplete",
-          "label": "Bribery Check",
-          "type": "text",
-          "field": "originationDetails.briberyCheckComplete"
-        },
-        {
-          "key": "originationDetails.sanctionsCheckComplete",
-          "label": "Sanctions Check",
-          "type": "text",
-          "field": "originationDetails.sanctionsCheckComplete"
-        }
+        { "key": "status", "label": "Status", "type": "text", "field": "status" },
+        { "key": "phase", "label": "Phase", "type": "text", "field": "phase" }
       ],
-      "filters": [{ "field": "originationDetails.kycComplete", "operator": "equals", "value": false }],
+      "filters": [{ "field": "status", "operator": "equals", "value": "Initial Review" }],
       "limit": 10
     }
   ]

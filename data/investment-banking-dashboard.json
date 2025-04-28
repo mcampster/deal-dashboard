@@ -1,111 +1,55 @@
 {
   "id": "investment-banking-dashboard",
-  "label": "Investment Banking Dashboard",
-  "icon": "bar-chart-2",
-  "description": "Overview of all investment banking deals and activities",
+  "label": "Investment Banking",
+  "icon": "briefcase",
+  "description": "Overview of investment banking deals and activities",
   "type": "dashboard",
-  "entity": "deals",
+  "actions": [{ "id": "refresh-dashboard", "label": "Refresh", "icon": "refresh", "type": "secondary" }],
   "widgets": [
     {
-      "id": "total-deal-value",
-      "title": "Total Deal Value",
+      "id": "active-deals",
       "type": "metric",
+      "title": "Active Deals",
+      "width": "quarter",
+      "entity": "deals",
+      "metricField": "count",
+      "metricFormat": "number",
+      "metricIcon": "briefcase"
+    },
+    {
+      "id": "total-deal-value",
+      "type": "metric",
+      "title": "Total Deal Value",
+      "width": "quarter",
       "entity": "deals",
       "metricField": "sum:value",
       "metricFormat": "currency",
-      "width": "quarter",
-      "height": "1x"
+      "metricIcon": "dollar-sign"
     },
     {
       "id": "deals-by-phase",
-      "title": "Deals by Phase",
       "type": "chart",
+      "title": "Deals by Phase",
+      "width": "half",
       "entity": "deals",
       "chartType": "donut",
-      "fields": ["phase", "value"],
-      "width": "quarter",
-      "height": "2x"
-    },
-    {
-      "id": "deals-by-status",
-      "title": "Deals by Status",
-      "type": "chart",
-      "entity": "deals",
-      "chartType": "bar",
-      "fields": ["status", "value"],
-      "width": "half",
-      "height": "2x"
+      "fields": ["phase", "id"]
     },
     {
       "id": "recent-deals",
-      "title": "Recent Deals",
       "type": "table",
+      "title": "Recent Deals",
+      "width": "full",
       "entity": "deals",
       "columns": [
-        {
-          "key": "name",
-          "label": "Deal Name",
-          "field": "name"
-        },
-        {
-          "key": "value",
-          "label": "Value",
-          "field": "value"
-        },
-        {
-          "key": "phase",
-          "label": "Phase",
-          "field": "phase"
-        },
-        {
-          "key": "status",
-          "label": "Status",
-          "field": "status"
-        }
+        { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
+        { "key": "clientName", "label": "Client", "type": "company", "field": "clientName" },
+        { "key": "value", "label": "Value", "type": "currency", "field": "value" },
+        { "key": "phase", "label": "Phase", "type": "text", "field": "phase" },
+        { "key": "status", "label": "Status", "type": "text", "field": "status" }
       ],
-      "filters": [],
-      "sort": [
-        {
-          "field": "createdAt",
-          "direction": "desc"
-        }
-      ],
-      "limit": 5,
-      "width": "half",
-      "height": "2x"
-    },
-    {
-      "id": "high-value-deals",
-      "title": "High Value Deals",
-      "type": "card",
-      "entity": "deals",
-      "fields": ["name", "value", "phase", "clientName"],
-      "filters": [
-        {
-          "field": "value",
-          "operator": "greaterThan",
-          "value": "$500M"
-        }
-      ],
-      "sort": [
-        {
-          "field": "value",
-          "direction": "desc"
-        }
-      ],
-      "limit": 1,
-      "width": "quarter",
-      "height": "2x"
-    },
-    {
-      "id": "deals-by-type",
-      "title": "Deals by Type",
-      "type": "chart",
-      "entity": "deals",
-      "chartType": "pie",
-      "fields": ["dealType", "value"],
-      "width": "quarter",
-      "height": "2x"
+      "sort": [{ "field": "createdAt", "direction": "desc" }],
+      "limit": 5
     }
   ]
 }
