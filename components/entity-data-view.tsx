@@ -7,7 +7,7 @@ import { CardLayout } from "@/components/card-layout"
 import { MasterDetailsView } from "@/components/master-details-view"
 import { LayoutToggle, type ViewLayout } from "@/components/layout-toggle"
 import { JiraStyleFilterBar } from "@/components/jira-style-filter-bar"
-import { ColumnPicker } from "@/components/column-picker"
+import { ColumnPickerPanel } from "@/components/column-picker-panel" // Import the new component
 import { VisualizationFilters } from "@/components/visualization-filters"
 import { useViewData } from "@/hooks/use-view-data"
 import { getAvailableColumnsFromSchema } from "@/lib/schema-utils" // Import the schema utility
@@ -119,8 +119,6 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
           />
         </div>
         <div className="flex-shrink-0 flex items-center">
-          {/* Pass availableColumns to the ColumnPicker */}
-          <ColumnPicker view={currentView} onViewChange={handleViewChange} availableColumns={availableColumns} />
           <LayoutToggle
             layout={layout}
             onLayoutChange={handleLayoutChange}
@@ -141,19 +139,25 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
 
       {/* Render the appropriate view based on layout */}
       {layout === "table" ? (
-        <Card>
-          <CardContent className="p-6">
-            <DynamicTable
-              view={currentView}
-              data={data}
-              isLoading={isLoading}
-              error={error}
-              pagination={pagination}
-              onPageChange={setPage}
-              onRowClick={handlePreviewClick}
-            />
-          </CardContent>
-        </Card>
+        <div className="flex flex-col">
+          {/* Add the column picker panel above the table, only when in table view */}
+          <div className="flex justify-end mb-2">
+            <ColumnPickerPanel view={currentView} onViewChange={handleViewChange} availableColumns={availableColumns} />
+          </div>
+          <Card>
+            <CardContent className="p-6">
+              <DynamicTable
+                view={currentView}
+                data={data}
+                isLoading={isLoading}
+                error={error}
+                pagination={pagination}
+                onPageChange={setPage}
+                onRowClick={handlePreviewClick}
+              />
+            </CardContent>
+          </Card>
+        </div>
       ) : layout === "card" ? (
         <CardLayout
           view={currentView}

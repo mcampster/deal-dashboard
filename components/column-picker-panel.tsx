@@ -1,23 +1,22 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Columns } from "lucide-react"
+import { Columns, Check, Search, GripVertical } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetTrigger } from "@/components/ui/sheet"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import type { ColumnConfig, ViewConfig } from "@/config/types"
 
-interface ColumnPickerProps {
+interface ColumnPickerPanelProps {
   view: ViewConfig
   onViewChange: (updatedView: ViewConfig) => void
   availableColumns?: ColumnConfig[]
 }
 
-export function ColumnPicker({ view, onViewChange, availableColumns = [] }: ColumnPickerProps) {
+export function ColumnPickerPanel({ view, onViewChange, availableColumns = [] }: ColumnPickerPanelProps) {
   const [open, setOpen] = useState(false)
   const [selectedColumns, setSelectedColumns] = useState<string[]>([])
   const [searchQuery, setSearchQuery] = useState("")
@@ -95,65 +94,84 @@ export function ColumnPicker({ view, onViewChange, availableColumns = [] }: Colu
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
+    <Sheet open={open} onOpenChange={setOpen}>
+      <SheetTrigger asChild>
         <Button variant="outline" size="sm" className="h-8 gap-1 px-2" aria-label="Select columns">
           <Columns className="h-4 w-4 mr-1" />
           <span>Columns</span>
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0" align="end">
-        <div className="p-3 border-b">
-          <div className="font-medium mb-2">Column Visibility</div>
-          <Input
-            placeholder="Search columns..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="h-8"
-          />
+      </SheetTrigger>
+      <SheetContent side="right" className="w-[350px] sm:w-[450px] p-0 flex flex-col">
+        <SheetHeader className="p-6 pb-2">
+          <SheetTitle className="flex items-center">
+            <Columns className="h-5 w-5 mr-2" />
+            Column Management
+          </SheetTitle>
+          <SheetDescription>Select which columns to display in the table. Drag to reorder columns.</SheetDescription>
+        </SheetHeader>
+
+        <div className="p-6 pt-2 pb-3 border-b">
+          <div className="relative">
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Search columns..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-8"
+            />
+          </div>
         </div>
-        <div className="p-2 flex gap-2 border-b">
-          <Button size="sm" variant="outline" className="h-7 text-xs" onClick={selectAllColumns}>
-            Select All
-          </Button>
-          <Button size="sm" variant="outline" className="h-7 text-xs" onClick={deselectAllColumns}>
-            Deselect All
-          </Button>
-          <Button size="sm" variant="outline" className="h-7 text-xs" onClick={resetColumns}>
-            Reset
-          </Button>
+
+        <div className="p-3 border-b flex justify-between items-center">
+          <div className="text-sm text-muted-foreground">
+            {selectedColumns.length} of {allColumns.length} columns selected
+          </div>
+          <div className="flex gap-2">
+            <Button size="sm" variant="outline" className="h-7 text-xs" onClick={selectAllColumns}>
+              Select All
+            </Button>
+            <Button size="sm" variant="outline" className="h-7 text-xs" onClick={deselectAllColumns}>
+              Clear
+            </Button>
+          </div>
         </div>
-        <ScrollArea className="h-[300px]">
-          <div className="p-2">
+
+        <ScrollArea className="flex-1">
+          <div className="p-4">
             {filteredColumns.length === 0 ? (
               <div className="text-center py-4 text-muted-foreground">No columns found</div>
             ) : (
               filteredColumns.map((column) => (
-                <div key={column.key} className="flex items-center space-x-2 py-1">
+                <div
+                  key={column.key}
+                  className="flex items-center space-x-2 py-2 px-2 rounded-md hover:bg-muted/50 cursor-pointer group"
+                >
+                  <GripVertical className="h-4 w-4 text-muted-foreground opacity-0 group-hover:opacity-100 cursor-grab" />
                   <Checkbox
                     id={`column-${column.key}`}
                     checked={selectedColumns.includes(column.key)}
                     onCheckedChange={() => toggleColumn(column.key)}
                   />
-                  <Label htmlFor={`column-${column.key}`} className="flex-1 cursor-pointer text-sm">
+                  <Label htmlFor={`column-${column.key}`} className="flex-1 cursor-pointer">
                     {column.label}
                   </Label>
-                  <span className="text-xs text-muted-foreground">{column.type}</span>
+                  <span className="text-xs px-2 py-1 rounded-full bg-muted text-muted-foreground">{column.type}</span>
                 </div>
               ))
             )}
           </div>
         </ScrollArea>
-        <Separator />
-        <div className="p-2 flex justify-between">
-          <Button size="sm" variant="ghost" onClick={() => setOpen(false)}>
-            Cancel
+
+        <div className="p-4 border-t flex justify-between">
+          <Button variant="outline" onClick={resetColumns}>
+            Reset
           </Button>
-          <Button size="sm" onClick={applyColumnSelection}>
-            Apply
+          <Button onClick={applyColumnSelection} className="gap-1">
+            <Check className="h-4 w-4" />
+            Apply Changes
           </Button>
         </div>
-      </PopoverContent>
-    </Popover>
+      </SheetContent>
+    </Sheet>
   )
 }
