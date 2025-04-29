@@ -1,17 +1,18 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { DynamicTable } from "@/components/dynamic-table"
 import { CardLayout } from "@/components/card-layout"
 import { MasterDetailsView } from "@/components/master-details-view"
 import { LayoutToggle, type ViewLayout } from "@/components/layout-toggle"
 import { JiraStyleFilterBar } from "@/components/jira-style-filter-bar"
-import { ColumnPickerPanel } from "@/components/column-picker-panel" // Import the new component
+import { ColumnPickerPanel } from "@/components/column-picker-panel"
+import { CardConfigEditor } from "@/components/card-config-editor"
 import { VisualizationFilters } from "@/components/visualization-filters"
 import { useViewData } from "@/hooks/use-view-data"
-import { getAvailableColumnsFromSchema } from "@/lib/schema-utils" // Import the schema utility
-import type { ViewConfig, FilterState } from "@/config/types"
+import { getAvailableColumnsFromSchema } from "@/lib/schema-utils"
+import type { ViewConfig, FilterState, CardConfig } from "@/config/types"
 
 interface EntityDataViewProps {
   view: ViewConfig
@@ -27,13 +28,15 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
 
   // Update currentView when view prop changes
   useEffect(() => {
+    console.log("EntityDataView: View prop changed:", view.id, view.label)
     setCurrentView(view)
   }, [view])
 
   // Add a useEffect to log when the entity data view changes
   useEffect(() => {
     console.log(`EntityDataView: Rendering with view ID ${currentView.id} (${currentView.label})`)
-  }, [currentView.id, currentView.label])
+    console.log("EntityDataView: Current view cardConfig:", currentView.cardConfig)
+  }, [currentView])
 
   // State for quick filters
   const [quickFilters, setQuickFilters] = useState<FilterState>({})
@@ -85,17 +88,38 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
   }
 
   // Handle view changes (e.g., column selection)
-  const handleViewChange = (updatedView: ViewConfig) => {
-    setCurrentView(updatedView)
+  const handleViewChange = useCallback(
+    (updatedView: ViewConfig) => {
+      console.log("EntityDataView: View updated:", updatedView.id, updatedView.label)
+      console.log("EntityDataView: Updated view cardConfig:", updatedView.cardConfig)
 
-    // Call the parent onViewChange if provided
-    if (onViewChange) {
-      onViewChange(updatedView)
-    }
+      setCurrentView(updatedView)
 
-    // Refresh the data with the updated view
-    refresh()
-  }
+      // Call the parent onViewChange if provided
+      if (onViewChange) {
+        onViewChange(updatedView)
+      }
+
+      // Refresh the data with the updated view
+      refresh()
+    },
+    [onViewChange, refresh],
+  )
+
+  // Handle card config changes
+  const handleCardConfigChange = useCallback(
+    (cardConfig: CardConfig) => {
+      console.log("EntityDataView: Card config changed:", cardConfig)
+
+      const updatedView = {
+        ...currentView,
+        cardConfig,
+      }
+
+      handleViewChange(updatedView)
+    },
+    [currentView, handleViewChange],
+  )
 
   // Handle preview click for card layout
   const handlePreviewClick = (entityId: string) => {
@@ -159,14 +183,20 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
           </Card>
         </div>
       ) : layout === "card" ? (
-        <CardLayout
-          view={currentView}
-          data={data}
-          pagination={pagination}
-          isLoading={isLoading}
-          onPageChange={setPage}
-          onPreviewClick={handlePreviewClick}
-        />
+        <div className="flex flex-col">
+          {/* Add the card config editor above the cards, only when in card view */}
+          <div className="flex justify-end mb-2">
+            <CardConfigEditor view={currentView} onCardConfigChange={handleCardConfigChange} />
+          </div>
+          <CardLayout
+            view={currentView}
+            data={data}
+            pagination={pagination}
+            isLoading={isLoading}
+            onPageChange={setPage}
+            onPreviewClick={handlePreviewClick}
+          />
+        </div>
       ) : (
         <MasterDetailsView
           view={currentView}

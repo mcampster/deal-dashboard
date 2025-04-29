@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef, useMemo } from "react"
+import { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import { DashboardView } from "@/components/dashboard-view"
 import { DetailsView } from "@/components/details-view"
 import { EntityDataView } from "@/components/entity-data-view"
@@ -79,33 +79,37 @@ export function ViewContainer({
     }
   }
 
-  // Handle view updates (e.g., column changes)
-  const handleViewUpdate = (updatedView: ViewConfig) => {
-    console.log(`ViewContainer: Updating view:`, updatedView.label)
+  // Handle view updates (e.g., column changes or card config changes)
+  const handleViewUpdate = useCallback(
+    (updatedView: ViewConfig) => {
+      console.log(`ViewContainer: Updating view:`, updatedView.label)
+      console.log(`ViewContainer: Updated view cardConfig:`, updatedView.cardConfig)
 
-    // If this is a predefined view, create a custom view based on it
-    if (getViewById(updatedView.id)) {
-      const customizedView = {
-        ...updatedView,
-        id: `custom-${updatedView.id}`,
-        label: `${updatedView.label} (Custom)`,
-      }
-      setCurrentCustomView(customizedView)
+      // If this is a predefined view, create a custom view based on it
+      if (getViewById(updatedView.id)) {
+        const customizedView = {
+          ...updatedView,
+          id: `custom-${updatedView.id}`,
+          label: `${updatedView.label} (Custom)`,
+        }
+        setCurrentCustomView(customizedView)
 
-      // Call the parent onViewChange if provided
-      if (onViewChange) {
-        onViewChange(customizedView)
-      }
-    } else {
-      // If it's already a custom view, just update it
-      setCurrentCustomView(updatedView)
+        // Call the parent onViewChange if provided
+        if (onViewChange) {
+          onViewChange(customizedView)
+        }
+      } else {
+        // If it's already a custom view, just update it
+        setCurrentCustomView(updatedView)
 
-      // Call the parent onViewChange if provided
-      if (onViewChange) {
-        onViewChange(updatedView)
+        // Call the parent onViewChange if provided
+        if (onViewChange) {
+          onViewChange(updatedView)
+        }
       }
-    }
-  }
+    },
+    [onViewChange],
+  )
 
   // Update selected view when defaultViewId changes
   useEffect(() => {
@@ -128,9 +132,10 @@ export function ViewContainer({
   useEffect(() => {
     if (prevViewIdRef.current !== selectedView.id) {
       console.log(`ViewContainer: Selected view changed from ${prevViewIdRef.current} to ${selectedView.id}`)
+      console.log(`ViewContainer: Selected view cardConfig:`, selectedView.cardConfig)
       prevViewIdRef.current = selectedView.id
     }
-  }, [selectedView.id])
+  }, [selectedView])
 
   // Render the appropriate view based on type
   const renderView = () => {

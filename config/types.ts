@@ -10,6 +10,20 @@ export interface ColumnConfig {
   filterable?: boolean // Whether this column should appear in the quick filter UI
 }
 
+// New CardConfig interface for card view configuration
+export interface CardConfig {
+  primaryField: string // Field to use as the card title
+  secondaryField?: string // Field to use as the card subtitle
+  detailFields?: string[] // Fields to display in the card body
+  imageField?: string // Field containing an image URL
+  badgeField?: string // Field to display as a badge
+  avatarField?: string // Field to use for the avatar
+  actionButtons?: string[] // IDs of actions to display as buttons
+  cardSize?: "small" | "medium" | "large" // Size of the cards
+  layout?: "grid" | "list" // Layout style for cards
+  gridColumns?: number // Number of columns in grid layout
+}
+
 export type ActionType = "primary" | "secondary"
 
 export interface ActionConfig {
@@ -127,6 +141,7 @@ export interface ViewConfig {
   type: ViewType // Type of view (list, dashboard, or details)
   entity?: string // Entity name for GraphQL query (required for list views)
   columns?: ColumnConfig[] // Required for list views
+  cardConfig?: CardConfig // New field for card view configuration
   actions: ActionConfig[]
   filters?: FilterConfig[] // Array of filters to apply to the view
   sort?: SortConfig[] // Array of sort configurations
