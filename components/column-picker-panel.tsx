@@ -24,6 +24,10 @@ export function ColumnPickerPanel({ view, onViewChange, availableColumns = [] }:
   // Initialize selected columns from the current view
   useEffect(() => {
     if (view.columns) {
+      console.log(
+        "ColumnPickerPanel: Initializing selected columns from view",
+        view.columns.map((c) => c.key),
+      )
       setSelectedColumns(view.columns.map((col) => col.key))
     }
   }, [view.columns])
@@ -36,6 +40,7 @@ export function ColumnPickerPanel({ view, onViewChange, availableColumns = [] }:
 
   // Handle column selection/deselection
   const toggleColumn = (columnKey: string) => {
+    console.log("ColumnPickerPanel: Toggling column", columnKey)
     setSelectedColumns((prev) => {
       if (prev.includes(columnKey)) {
         return prev.filter((key) => key !== columnKey)
@@ -47,29 +52,20 @@ export function ColumnPickerPanel({ view, onViewChange, availableColumns = [] }:
 
   // Apply the selected columns to the view
   const applyColumnSelection = () => {
-    // Get the currently selected columns from all available columns
+    console.log("ColumnPickerPanel: Applying column selection", selectedColumns)
+
+    // Get the full column configs for selected columns
     const selectedColumnConfigs = allColumns.filter((col) => selectedColumns.includes(col.key))
 
-    // Create a map of current columns for easy lookup
-    const currentColumnsMap = new Map((view.columns || []).map((col) => [col.key, col]))
-
-    // Create updated columns array, preserving order of existing columns
-    // and adding new columns at the end
-    const existingSelectedColumns = (view.columns || []).filter((col) => selectedColumns.includes(col.key))
-
-    // Find columns that are newly selected (not in current view)
-    const newlySelectedColumns = selectedColumnConfigs.filter(
-      (col) => !currentColumnsMap.has(col.key) && selectedColumns.includes(col.key),
-    )
-
-    // Combine existing and newly selected columns
-    const updatedColumns = [...existingSelectedColumns, ...newlySelectedColumns]
+    console.log("ColumnPickerPanel: Selected column configs", selectedColumnConfigs)
 
     // Create an updated view with the new columns
     const updatedView = {
       ...view,
-      columns: updatedColumns,
+      columns: selectedColumnConfigs,
     }
+
+    console.log("ColumnPickerPanel: Updated view", updatedView)
 
     // Call the onViewChange callback with the updated view
     onViewChange(updatedView)

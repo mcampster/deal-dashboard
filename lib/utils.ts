@@ -22,3 +22,20 @@ export function parseCurrencyValue(value: string | number): number {
   // Remove $ and commas, then parse as float
   return Number.parseFloat(value.replace(/[$,]/g, "")) || 0
 }
+
+// Helper function to format cell content based on column type
+export function formatCellValue(value: any, type: string): string {
+  if (value === undefined || value === null) return "N/A"
+
+  switch (type) {
+    case "date":
+      return new Date(value).toLocaleDateString()
+    case "currency":
+      if (typeof value === "string" && value.startsWith("$")) {
+        return value
+      }
+      return `$${Number(value).toLocaleString()}`
+    default:
+      return String(value)
+  }
+}

@@ -29,12 +29,20 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
   // Update currentView when view prop changes
   useEffect(() => {
     console.log("EntityDataView: View prop changed:", view.id, view.label)
+    console.log(
+      "EntityDataView: View columns:",
+      view.columns?.map((c) => c.key),
+    )
     setCurrentView(view)
   }, [view])
 
   // Add a useEffect to log when the entity data view changes
   useEffect(() => {
     console.log(`EntityDataView: Rendering with view ID ${currentView.id} (${currentView.label})`)
+    console.log(
+      "EntityDataView: Current view columns:",
+      currentView.columns?.map((c) => c.key),
+    )
     console.log("EntityDataView: Current view cardConfig:", currentView.cardConfig)
   }, [currentView])
 
@@ -91,13 +99,20 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
   const handleViewChange = useCallback(
     (updatedView: ViewConfig) => {
       console.log("EntityDataView: View updated:", updatedView.id, updatedView.label)
+      console.log(
+        "EntityDataView: Updated view columns:",
+        updatedView.columns?.map((c) => c.key),
+      )
       console.log("EntityDataView: Updated view cardConfig:", updatedView.cardConfig)
 
-      setCurrentView(updatedView)
+      // Create a deep copy to ensure we're not modifying the original object
+      const viewCopy = JSON.parse(JSON.stringify(updatedView))
+
+      setCurrentView(viewCopy)
 
       // Call the parent onViewChange if provided
       if (onViewChange) {
-        onViewChange(updatedView)
+        onViewChange(viewCopy)
       }
 
       // Refresh the data with the updated view
