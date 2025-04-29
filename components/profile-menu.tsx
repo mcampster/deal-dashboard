@@ -1,6 +1,6 @@
 "use client"
 
-import { User, Moon, Sun, Monitor, ScalingIcon } from "lucide-react"
+import { User, Moon, Sun, Monitor, ScalingIcon, Maximize, Minimize } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -13,10 +13,12 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { useTheme } from "@/contexts/theme-context"
 import { useFontSize } from "@/contexts/font-size-context"
+import { useLayoutWidth } from "@/contexts/layout-width-context"
 
 export function ProfileMenu() {
   const { theme, setTheme } = useTheme()
   const { fontSize, setFontSize } = useFontSize()
+  const { layoutWidth, setLayoutWidth } = useLayoutWidth()
 
   return (
     <DropdownMenu>
@@ -83,6 +85,28 @@ export function ProfileMenu() {
           >
             <ScalingIcon className="mr-2 h-4 w-4" />
             <span className="text-lg">Large</span>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          <DropdownMenuLabel className="text-xs font-semibold text-muted-foreground">Layout Width</DropdownMenuLabel>
+
+          {/* Layout width options */}
+          <DropdownMenuItem
+            onClick={() => setLayoutWidth("fluid")}
+            className={layoutWidth === "fluid" ? "bg-primary/10 text-primary font-medium" : ""}
+          >
+            <Maximize className="mr-2 h-4 w-4" />
+            <span>Fluid</span>
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            onClick={() => setLayoutWidth("fixed")}
+            className={layoutWidth === "fixed" ? "bg-primary/10 text-primary font-medium" : ""}
+          >
+            <Minimize className="mr-2 h-4 w-4" />
+            <span>Fixed</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
       </DropdownMenuContent>

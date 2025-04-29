@@ -14,9 +14,11 @@ import { StickyConfigPanel } from "@/components/sticky-config-panel"
 import { AIInput } from "@/components/ai-input"
 import { ProfileMenu } from "@/components/profile-menu"
 import { KeyboardShortcuts } from "@/components/keyboard-shortcuts"
+import { LayoutWidthSelector } from "@/components/layout-width-selector"
 import { iconMap } from "@/config/icons"
 import type { ViewConfig } from "@/config/types"
 import { cn } from "@/lib/utils"
+import { useLayoutWidth } from "@/contexts/layout-width-context"
 
 interface AppLayoutProps {
   children: React.ReactNode
@@ -28,6 +30,7 @@ export function AppLayout({ children, currentView, onApplyCustomConfig }: AppLay
   const [showConfigPanel, setShowConfigPanel] = useState(false)
   const pathname = usePathname()
   const searchInputRef = useRef<HTMLInputElement>(null)
+  const { layoutWidth } = useLayoutWidth()
 
   // Navigation items with proper routes and separators - keeping the original structure
   const navItems = [
@@ -59,6 +62,9 @@ export function AppLayout({ children, currentView, onApplyCustomConfig }: AppLay
 
   // Ensure the dashboard icon exists
   const DashboardIcon = iconMap.dashboard
+
+  // Determine container class based on layout width preference
+  const containerClass = layoutWidth === "fixed" ? "container mx-auto p-4 md:p-6" : "w-full p-4 md:p-6"
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -119,6 +125,9 @@ export function AppLayout({ children, currentView, onApplyCustomConfig }: AppLay
 
         {/* Right side actions */}
         <div className="flex items-center gap-2">
+          {/* Layout Width Selector */}
+          <LayoutWidthSelector />
+
           {/* Config Panel Toggle Button */}
           <Button
             variant={showConfigPanel ? "default" : "outline"}
@@ -188,7 +197,7 @@ export function AppLayout({ children, currentView, onApplyCustomConfig }: AppLay
         {/* Main Content with Sticky Config Panel - add left padding to account for fixed sidebar */}
         <div className="flex flex-1 md:pl-[70px]">
           <main className="flex-1 overflow-auto">
-            <div className="container mx-auto p-4 md:p-6">{children}</div>
+            <div className={containerClass}>{children}</div>
           </main>
 
           {/* Sticky Config Panel */}

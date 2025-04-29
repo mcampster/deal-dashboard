@@ -11,6 +11,7 @@ interface UseViewDataOptions {
   pagination?: PaginationState
   filter?: FilterState
   fields?: string[] // Add custom fields option
+  key?: string // Add key for forcing refresh
 }
 
 interface UseViewDataResult<T = any> {
@@ -37,6 +38,7 @@ export function useViewData<T = any>({
   pagination = { page: 1, pageSize: 10 },
   filter = {},
   fields: customFields,
+  key,
 }: UseViewDataOptions): UseViewDataResult<T> {
   const [queryResult, setQueryResult] = useState<QueryResult<T> | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -49,6 +51,7 @@ export function useViewData<T = any>({
   const requestIdRef = useRef(0)
   const hookIdRef = useRef(`hook_${++hookInstanceCounter}`)
   const viewIdRef = useRef(view.id)
+  const initialLoadRef = useRef(false)
 
   // Log when view ID changes
   if (viewIdRef.current !== view.id) {
@@ -134,7 +137,9 @@ export function useViewData<T = any>({
     const currentRequestId = ++requestIdRef.current
 
     // Log when the effect runs with the current view ID
-    console.log(`[${hookId}] Data fetch effect running for view: ${viewId}, entity: ${viewEntity}`)
+    console.log(
+      `[${hookId}] Data fetch effect running for view: ${viewId}, entity: ${viewEntity}, key: ${key || "none"}`,
+    )
 
     // If no entity is specified, return empty data
     if (!viewEntity) {
@@ -151,7 +156,11 @@ export function useViewData<T = any>({
       return
     }
 
-    setIsLoading(true)
+    // Set loading state only if this is not a subsequent load
+    if (!initialLoadRef.current) {
+      setIsLoading(true)
+    }
+
     setError(null)
 
     // Try to use the query function first
@@ -174,6 +183,7 @@ export function useViewData<T = any>({
           console.log(`[${hookId}] Data received:`, result.data.length, "items")
           const fixedData = fixMockData(result.data)
           setQueryResult({ ...result, data: fixedData })
+          initialLoadRef.current = true
         }
       } catch (err) {
         console.error(`[${hookId}] Error fetching data:`, err)
@@ -223,6 +233,7 @@ export function useViewData<T = any>({
               pageSize: currentPagination.pageSize,
               totalPages,
             })
+            initialLoadRef.current = true
           } else {
             setError(err instanceof Error ? err : new Error(String(err)))
           }
@@ -239,7 +250,7 @@ export function useViewData<T = any>({
     return () => {
       isMounted = false
     }
-  }, [viewId, viewEntity, viewLimit, currentFilter, currentPagination, sortConfig, fields, refreshCounter, hookId])
+  }, [viewId, viewEntity, viewLimit, currentFilter, currentPagination, sortConfig, fields, refreshCounter, hookId, key])
 
   const refresh = () => {
     console.log(`[${hookId}] Refreshing data for view: ${viewId}`)

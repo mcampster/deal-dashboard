@@ -4,6 +4,8 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/contexts/theme-context"
 import { FontSizeProvider } from "@/contexts/font-size-context"
+import { LayoutWidthProvider } from "@/contexts/layout-width-context"
+import { Suspense } from "react"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,7 +24,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
         <ThemeProvider>
-          <FontSizeProvider>{children}</FontSizeProvider>
+          <FontSizeProvider>
+            <LayoutWidthProvider>
+              <Suspense>{children}</Suspense>
+            </LayoutWidthProvider>
+          </FontSizeProvider>
         </ThemeProvider>
       </body>
     </html>

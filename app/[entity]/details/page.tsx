@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { use } from "react"
 import { AppLayout } from "@/components/app-layout"
 import { ViewContainer } from "@/components/view-container"
 import { getViewById, getViewsByEntity } from "@/config/views"
@@ -14,8 +15,9 @@ interface Props {
 }
 
 export default function EntityDetailsPage({ params }: Props) {
-  // Safely destructure after ensuring params exists
-  const entity = params?.entity
+  // Unwrap params if it's a promise
+  const unwrappedParams = params instanceof Promise ? use(params) : params
+  const entity = unwrappedParams?.entity
 
   // Add a check to handle undefined entity
   if (!entity) {

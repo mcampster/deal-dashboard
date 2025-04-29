@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useMemo } from "react"
 import { DashboardView } from "@/components/dashboard-view"
 import { DetailsView } from "@/components/details-view"
 import { EntityDataView } from "@/components/entity-data-view"
@@ -17,7 +17,7 @@ interface ViewContainerProps {
   onViewChange?: (view: ViewConfig) => void
   entity?: string
   resetToDefault?: boolean
-  entityId?: string | null // Add this prop
+  entityId?: string | null
 }
 
 export function ViewContainer({
@@ -26,11 +26,14 @@ export function ViewContainer({
   customView = null,
   onViewChange,
   entity,
-  resetToDefault = true, // Default to true for backward compatibility
+  resetToDefault = true,
   entityId,
 }: ViewContainerProps) {
-  // Get the default view outside of state to prevent re-renders
-  const defaultView = getViewById(defaultViewId) || viewsConfig[0]
+  // Use useMemo to prevent recalculation on every render
+  const defaultView = useMemo(() => {
+    const view = getViewById(defaultViewId)
+    return view || viewsConfig[0]
+  }, [defaultViewId])
 
   const [selectedViewId, setSelectedViewId] = useState<string>(defaultViewId)
   const [currentCustomView, setCurrentCustomView] = useState<ViewConfig | null>(customView)
@@ -38,18 +41,26 @@ export function ViewContainer({
   // Add a ref to track view changes
   const prevViewIdRef = useRef<string>(selectedViewId)
 
-  // Filter views based on type and entity
-  const availableViews = viewsConfig.filter((view) => {
-    if (viewType !== "all" && view.type !== viewType) return false
-    if (entity && view.entity !== entity) return false
-    return true
-  })
+  // Use useMemo for filtering views to prevent recalculation on every render
+  const availableViews = useMemo(() => {
+    return viewsConfig.filter((view) => {
+      if (viewType !== "all" && view.type !== viewType) return false
+      if (entity && view.entity !== entity) return false
+      return true
+    })
+  }, [viewType, entity])
 
-  // Use either the custom view or the selected view from the config
-  const selectedView = currentCustomView || getViewById(selectedViewId) || defaultView
+  // Use useMemo to determine the selected view to prevent recalculation
+  const selectedView = useMemo(() => {
+    return currentCustomView || getViewById(selectedViewId) || defaultView
+  }, [currentCustomView, selectedViewId, defaultView])
 
   // Get the refresh function from the hook
-  const { refresh } = useViewData({ view: selectedView })
+  const { refresh } = useViewData({
+    view: selectedView,
+    // Add a key to force refresh when the view changes
+    key: `${selectedView.id}-${entity || "no-entity"}`,
+  })
 
   // Handle view change from view picker
   const handleViewChange = (viewId: string) => {
