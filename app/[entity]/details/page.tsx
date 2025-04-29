@@ -14,7 +14,14 @@ interface Props {
 }
 
 export default function EntityDetailsPage({ params }: Props) {
-  const { entity } = params
+  // Safely destructure after ensuring params exists
+  const entity = params?.entity
+
+  // Add a check to handle undefined entity
+  if (!entity) {
+    return <div>Loading entity details...</div>
+  }
+
   const searchParams = useSearchParams()
   const id = searchParams.get("id")
 

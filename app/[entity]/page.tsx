@@ -5,7 +5,8 @@ import { AppLayout } from "@/components/app-layout"
 import { ViewContainer } from "@/components/view-container"
 import { getViewsByEntity } from "@/config/views"
 import type { ViewConfig } from "@/config/types"
-import { notFound, useRouter } from "next/navigation"
+import { notFound } from "next/navigation"
+import { useRouter } from "next/navigation"
 
 interface Props {
   params: {
@@ -14,7 +15,14 @@ interface Props {
 }
 
 export default function EntityPage({ params }: Props) {
-  const { entity } = params
+  // Safely destructure after ensuring params exists
+  const entity = params?.entity
+
+  // Add a check to handle undefined entity
+  if (!entity) {
+    return <div>Loading entity data...</div>
+  }
+
   const router = useRouter()
 
   // Find views for this entity - do this outside of any hooks or state
