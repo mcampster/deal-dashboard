@@ -31,8 +31,13 @@ export function ViewContainer({
 }: ViewContainerProps) {
   // Use useMemo to prevent recalculation on every render
   const defaultView = useMemo(() => {
-    const view = getViewById(defaultViewId)
-    return view || viewsConfig[0]
+    try {
+      const view = getViewById(defaultViewId)
+      return view || (Array.isArray(viewsConfig) && viewsConfig.length > 0 ? viewsConfig[0] : null)
+    } catch (error) {
+      console.error("Error getting default view:", error)
+      return null
+    }
   }, [defaultViewId])
 
   const [selectedViewId, setSelectedViewId] = useState<string>(defaultViewId)
@@ -43,21 +48,45 @@ export function ViewContainer({
 
   // Use useMemo for filtering views to prevent recalculation on every render
   const availableViews = useMemo(() => {
-    if (!Array.isArray(viewsConfig)) return []
+    try {
+      if (!Array.isArray(viewsConfig)) return []
 
-    return viewsConfig.filter((view) => {
-      // If viewType is specified, filter by that type
-      if (viewType && view.type !== viewType) {
-        return false
-      }
-      return true
-    })
-  }, [viewType])
+      return viewsConfig.filter((view) => {
+        if (viewType !== "all" && view.type !== viewType) return false
+        if (entity && view.entity !== entity) return false
+        return true
+      })
+    } catch (error) {
+      console.error("Error filtering views:", error)
+      return []
+    }
+  }, [viewType, entity])
 
   // Use useMemo to determine the selected view to prevent recalculation
   const selectedView = useMemo(() => {
-    return currentCustomView || getViewById(selectedViewId) || defaultView
-  }, [currentCustomView, selectedViewId, defaultView])
+    try {
+      return (
+        currentCustomView ||
+        getViewById(selectedViewId) ||
+        defaultView || {
+          id: "fallback-view",
+          label: "Fallback View",
+          type: viewType === "all" ? "list" : viewType,
+          entity: entity || "deals",
+          columns: [],
+        }
+      )
+    } catch (error) {
+      console.error("Error getting selected view:", error)
+      return {
+        id: "error-view",
+        label: "Error View",
+        type: viewType === "all" ? "list" : viewType,
+        entity: entity || "deals",
+        columns: [],
+      }
+    }
+  }, [currentCustomView, selectedViewId, defaultView, viewType, entity])
 
   // Get the refresh function from the hook
   const { refresh } = useViewData({
@@ -72,44 +101,52 @@ export function ViewContainer({
     setSelectedViewId(viewId)
     setCurrentCustomView(null) // Clear any custom view when switching to a predefined view
 
-    const newView = getViewById(viewId)
-    console.log(`ViewContainer: New view found:`, newView?.label)
+    try {
+      const newView = getViewById(viewId)
+      console.log(`ViewContainer: New view found:`, newView?.label)
 
-    if (newView && onViewChange) {
-      console.log(`ViewContainer: Calling parent onViewChange with view:`, newView)
-      onViewChange(newView)
-    } else {
-      console.error(`ViewContainer: Failed to find view with ID: ${viewId}`)
+      if (newView && onViewChange) {
+        console.log(`ViewContainer: Calling parent onViewChange with view:`, newView)
+        onViewChange(newView)
+      } else {
+        console.error(`ViewContainer: Failed to find view with ID: ${viewId}`)
+      }
+    } catch (error) {
+      console.error(`ViewContainer: Error changing view:`, error)
     }
   }
 
   // Handle view updates (e.g., column changes or card config changes)
   const handleViewUpdate = useCallback(
     (updatedView: ViewConfig) => {
-      console.log(`ViewContainer: Updating view:`, updatedView.label)
-      console.log(`ViewContainer: Updated view cardConfig:`, updatedView.cardConfig)
+      try {
+        console.log(`ViewContainer: Updating view:`, updatedView.label)
+        console.log(`ViewContainer: Updated view cardConfig:`, updatedView.cardConfig)
 
-      // If this is a predefined view, create a custom view based on it
-      if (getViewById(updatedView.id)) {
-        const customizedView = {
-          ...updatedView,
-          id: `custom-${updatedView.id}`,
-          label: `${updatedView.label} (Custom)`,
-        }
-        setCurrentCustomView(customizedView)
+        // If this is a predefined view, create a custom view based on it
+        if (getViewById(updatedView.id)) {
+          const customizedView = {
+            ...updatedView,
+            id: `custom-${updatedView.id}`,
+            label: `${updatedView.label} (Custom)`,
+          }
+          setCurrentCustomView(customizedView)
 
-        // Call the parent onViewChange if provided
-        if (onViewChange) {
-          onViewChange(customizedView)
-        }
-      } else {
-        // If it's already a custom view, just update it
-        setCurrentCustomView(updatedView)
+          // Call the parent onViewChange if provided
+          if (onViewChange) {
+            onViewChange(customizedView)
+          }
+        } else {
+          // If it's already a custom view, just update it
+          setCurrentCustomView(updatedView)
 
-        // Call the parent onViewChange if provided
-        if (onViewChange) {
-          onViewChange(updatedView)
+          // Call the parent onViewChange if provided
+          if (onViewChange) {
+            onViewChange(updatedView)
+          }
         }
+      } catch (error) {
+        console.error(`ViewContainer: Error updating view:`, error)
       }
     },
     [onViewChange],
@@ -143,17 +180,22 @@ export function ViewContainer({
 
   // Render the appropriate view based on type
   const renderView = () => {
-    // Add a key prop with the view ID to force a re-render when the view changes
-    if (selectedView.type === "dashboard") {
-      return <DashboardView key={`dashboard-${selectedView.id}`} view={selectedView} />
-    }
+    try {
+      // Add a key prop with the view ID to force a re-render when the view changes
+      if (selectedView.type === "dashboard") {
+        return <DashboardView key={`dashboard-${selectedView.id}`} view={selectedView} />
+      }
 
-    if (selectedView.type === "details") {
-      return <DetailsView key={`details-${selectedView.id}`} view={selectedView} entityId={entityId} />
-    }
+      if (selectedView.type === "details") {
+        return <DetailsView key={`details-${selectedView.id}`} view={selectedView} entityId={entityId} />
+      }
 
-    // For both list and master-details views, use the EntityDataView
-    return <EntityDataView key={`entity-${selectedView.id}`} view={selectedView} onViewChange={handleViewUpdate} />
+      // For both list and master-details views, use the EntityDataView
+      return <EntityDataView key={`entity-${selectedView.id}`} view={selectedView} onViewChange={handleViewUpdate} />
+    } catch (error) {
+      console.error("Error rendering view:", error)
+      return <div className="p-4">Error rendering view. Please check the console for details.</div>
+    }
   }
 
   // Don't show view controls for details view

@@ -17,9 +17,12 @@ interface ViewActionsProps {
 export function ViewActions({ view, onRefresh }: ViewActionsProps) {
   const [isLoading, setIsLoading] = useState<string | null>(null)
 
+  // Ensure view.actions is an array before filtering
+  const actions = Array.isArray(view.actions) ? view.actions : []
+
   // Get primary and secondary actions
-  const primaryActions = view.actions.filter((action) => action.type === "primary")
-  const secondaryActions = view.actions.filter((action) => action.type === "secondary")
+  const primaryActions = actions.filter((action) => action.type === "primary")
+  const secondaryActions = actions.filter((action) => action.type === "secondary")
 
   // Handle action click
   const handleActionClick = (action: ActionConfig) => {
@@ -52,7 +55,7 @@ export function ViewActions({ view, onRefresh }: ViewActionsProps) {
     <div className="flex items-center gap-2">
       {/* Render primary actions as buttons */}
       {primaryActions.map((action) => {
-        const ActionIcon = iconMap[action.icon as keyof typeof iconMap]
+        const ActionIcon = action.icon ? iconMap[action.icon as keyof typeof iconMap] : undefined
         return (
           <Button
             key={action.id}
@@ -77,7 +80,7 @@ export function ViewActions({ view, onRefresh }: ViewActionsProps) {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {secondaryActions.map((action) => {
-              const ActionIcon = iconMap[action.icon as keyof typeof iconMap]
+              const ActionIcon = action.icon ? iconMap[action.icon as keyof typeof iconMap] : undefined
               return (
                 <DropdownMenuItem
                   key={action.id}

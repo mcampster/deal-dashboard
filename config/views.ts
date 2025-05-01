@@ -30,7 +30,7 @@ import dashboardOriginationConfig from "@/data/dashboard-origination.json"
 import dashboardSyndicateConfig from "@/data/dashboard-syndicate.json"
 import dashboardComplianceConfig from "@/data/dashboard-compliance.json"
 
-// Add the import for the validation function
+// Try to import the validation function
 import { validateAllViewConfigs } from "@/lib/config-validator"
 
 // Add type property to existing configs if they don't have it
@@ -47,54 +47,84 @@ const addTypeToConfig = (
   return config as ViewConfig
 }
 
-// Combine all view configurations and validate them against schemas
-export const viewsConfig: ViewConfig[] = validateAllViewConfigs([
-  addTypeToConfig(dealsConfig),
-  addTypeToConfig(contactsConfig),
-  addTypeToConfig(clientsConfig),
-  addTypeToConfig(activitiesConfig),
-  addTypeToConfig(highValueDealsConfig),
-  addTypeToConfig(techClientsConfig),
-  addTypeToConfig(recentDealsConfig),
-  addTypeToConfig(recentActivitiesConfig),
-  addTypeToConfig(lowValueDealsConfig),
-  addTypeToConfig(salesDashboardConfig, "dashboard"),
-  addTypeToConfig(clientsDashboardConfig, "dashboard"),
-  addTypeToConfig(dealDetailsConfig, "details"),
-  addTypeToConfig(clientDetailsConfig, "details"),
-  addTypeToConfig(contactDetailsConfig, "details"),
-  addTypeToConfig(activityDetailsConfig, "details"),
-  addTypeToConfig(dealsMasterDetailsConfig, "master-details"),
-  addTypeToConfig(contactsMasterDetailsConfig, "master-details"),
-  addTypeToConfig(dealTeamsConfig),
-  addTypeToConfig(booksConfig),
-  addTypeToConfig(investmentBankingDashboardConfig, "dashboard"),
+// Wrap in try-catch to handle any errors
+let viewsConfig: ViewConfig[] = []
 
-  // Add new deal configurations
-  addTypeToConfig(dealOriginationViewConfig),
-  addTypeToConfig(dealSyndicateViewConfig),
-  addTypeToConfig(dealComplianceViewConfig),
-  addTypeToConfig(dashboardOriginationConfig, "dashboard"),
-  addTypeToConfig(dashboardSyndicateConfig, "dashboard"),
-  addTypeToConfig(dashboardComplianceConfig, "dashboard"),
-])
+try {
+  // Combine all view configurations and validate them against schemas
+  viewsConfig = validateAllViewConfigs([
+    addTypeToConfig(dealsConfig),
+    addTypeToConfig(contactsConfig),
+    addTypeToConfig(clientsConfig),
+    addTypeToConfig(activitiesConfig),
+    addTypeToConfig(highValueDealsConfig),
+    addTypeToConfig(techClientsConfig),
+    addTypeToConfig(recentDealsConfig),
+    addTypeToConfig(recentActivitiesConfig),
+    addTypeToConfig(lowValueDealsConfig),
+    addTypeToConfig(salesDashboardConfig, "dashboard"),
+    addTypeToConfig(clientsDashboardConfig, "dashboard"),
+    addTypeToConfig(dealDetailsConfig, "details"),
+    addTypeToConfig(clientDetailsConfig, "details"),
+    addTypeToConfig(contactDetailsConfig, "details"),
+    addTypeToConfig(activityDetailsConfig, "details"),
+    addTypeToConfig(dealsMasterDetailsConfig, "master-details"),
+    addTypeToConfig(contactsMasterDetailsConfig, "master-details"),
+    addTypeToConfig(dealTeamsConfig),
+    addTypeToConfig(booksConfig),
+    addTypeToConfig(investmentBankingDashboardConfig, "dashboard"),
+
+    // Add new deal configurations
+    addTypeToConfig(dealOriginationViewConfig),
+    addTypeToConfig(dealSyndicateViewConfig),
+    addTypeToConfig(dealComplianceViewConfig),
+    addTypeToConfig(dashboardOriginationConfig, "dashboard"),
+    addTypeToConfig(dashboardSyndicateConfig, "dashboard"),
+    addTypeToConfig(dashboardComplianceConfig, "dashboard"),
+  ])
+} catch (error) {
+  console.error("Error setting up viewsConfig:", error)
+  viewsConfig = []
+}
 
 // Helper function to get a view by ID
 export function getViewById(id: string): ViewConfig | undefined {
-  return viewsConfig.find((view) => view.id === id)
+  try {
+    return viewsConfig.find((view) => view.id === id)
+  } catch (error) {
+    console.error("Error in getViewById:", error)
+    return undefined
+  }
 }
 
 // Helper function to get all view IDs
 export function getAllViewIds(): string[] {
-  return viewsConfig.map((view) => view.id)
+  try {
+    return viewsConfig.map((view) => view.id)
+  } catch (error) {
+    console.error("Error in getAllViewIds:", error)
+    return []
+  }
 }
 
 // Helper function to get views by entity
 export function getViewsByEntity(entity: string): ViewConfig[] {
-  return viewsConfig.filter((view) => view.entity === entity)
+  try {
+    return viewsConfig.filter((view) => view.entity === entity)
+  } catch (error) {
+    console.error("Error in getViewsByEntity:", error)
+    return []
+  }
 }
 
 // Helper function to get views by type
 export function getViewsByType(type: "list" | "dashboard" | "details" | "master-details"): ViewConfig[] {
-  return viewsConfig.filter((view) => view.type === type)
+  try {
+    return viewsConfig.filter((view) => view.type === type)
+  } catch (error) {
+    console.error("Error in getViewsByType:", error)
+    return []
+  }
 }
+
+export { viewsConfig }

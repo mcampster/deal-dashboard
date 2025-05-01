@@ -142,7 +142,7 @@ export interface ViewConfig {
   entity?: string // Entity name for GraphQL query (required for list views)
   columns?: ColumnConfig[] // Required for list views
   cardConfig?: CardConfig // New field for card view configuration
-  actions: ActionConfig[]
+  actions?: ActionConfig[] // Make this optional with a default empty array
   filters?: FilterConfig[] // Array of filters to apply to the view
   sort?: SortConfig[] // Array of sort configurations
   limit?: number // Optional limit on the number of results

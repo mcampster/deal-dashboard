@@ -26,8 +26,11 @@ export function ViewHeader({
   entityFilter,
   onRefresh,
 }: ViewHeaderProps) {
+  // Ensure views is an array
+  const safeViews = Array.isArray(views) ? views : []
+
   // Filter views by entity if entityFilter is provided
-  const filteredViews = entityFilter ? views.filter((view) => view.entity === entityFilter) : views
+  const filteredViews = entityFilter ? safeViews.filter((view) => view.entity === entityFilter) : safeViews
 
   // Handle action selection from the command dialog
   const handleActionSelect = (actionId: string) => {
