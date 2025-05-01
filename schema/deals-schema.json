@@ -6,7 +6,7 @@
   "required": ["id", "name", "value", "phase", "status", "clientName"],
   "properties": {
     "id": {
-      "type": "integer",
+      "type": "string",
       "description": "Unique identifier for the deal"
     },
     "name": {
@@ -102,6 +102,73 @@
           "type": "string",
           "description": "Date when the deal was announced",
           "format": "date"
+        },
+        "pitchDate": {
+          "type": "string",
+          "description": "Date when the pitch was made",
+          "format": "date"
+        },
+        "mandateDate": {
+          "type": "string",
+          "description": "Date when the mandate was received",
+          "format": "date"
+        },
+        "engagementLetterDate": {
+          "type": "string",
+          "description": "Date when the engagement letter was signed",
+          "format": "date"
+        },
+        "feeLetter": {
+          "type": "object",
+          "description": "Details about the fee letter",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["Not Started", "In Progress", "Completed"]
+            },
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "amount": {
+              "type": "string",
+              "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+            }
+          }
+        },
+        "commitmentCommittee": {
+          "type": "object",
+          "description": "Details about the commitment committee",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["Not Started", "Scheduled", "Approved", "Rejected"]
+            },
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "riskAssessment": {
+          "type": "object",
+          "description": "Risk assessment details",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["Not Started", "In Progress", "Completed"]
+            },
+            "rating": {
+              "type": "string",
+              "enum": ["Low", "Medium", "High"]
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -110,15 +177,15 @@
       "description": "Details about the execution phase",
       "properties": {
         "trancheBookId": {
-          "type": "integer",
+          "type": "string",
           "description": "ID of the associated tranche book"
         },
         "orderBookId": {
-          "type": "integer",
+          "type": "string",
           "description": "ID of the associated order book"
         },
         "hedgeBookId": {
-          "type": "integer",
+          "type": "string",
           "description": "ID of the associated hedge book"
         },
         "pricingDate": {
@@ -135,6 +202,138 @@
           "type": "string",
           "description": "Date of settlement",
           "format": "date"
+        },
+        "bookStatus": {
+          "type": "string",
+          "enum": ["Not Started", "Open", "Covered", "Closed"],
+          "description": "Current status of the book"
+        },
+        "bookSize": {
+          "type": "string",
+          "description": "Size of the book",
+          "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+        },
+        "overallocation": {
+          "type": "string",
+          "description": "Amount of overallocation",
+          "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+        },
+        "syndicateMembers": {
+          "type": "array",
+          "description": "Members of the syndicate",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string",
+                "enum": ["Lead", "Co-Lead", "Member"]
+              },
+              "allocation": {
+                "type": "string",
+                "pattern": "^\\$[0-9,]+(\\.[0-9]{2})?[KMB]?$"
+              }
+            }
+          }
+        },
+        "roadshowDetails": {
+          "type": "object",
+          "description": "Details about the roadshow",
+          "properties": {
+            "startDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "endDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "locations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "meetings": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "location": {
+                    "type": "string"
+                  },
+                  "attendees": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "dueDiligence": {
+          "type": "object",
+          "description": "Due diligence details",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["Not Started", "In Progress", "Completed"]
+            },
+            "completionDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "provider": {
+              "type": "string"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "legalDocumentation": {
+          "type": "object",
+          "description": "Legal documentation details",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["Not Started", "In Progress", "Completed"]
+            },
+            "completionDate": {
+              "type": "string",
+              "format": "date"
+            },
+            "lawFirm": {
+              "type": "string"
+            },
+            "documents": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["Draft", "Review", "Final"]
+                  },
+                  "date": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
         }
       }
     },
@@ -166,6 +365,44 @@
           "type": "string",
           "description": "Date of expense reconciliation",
           "format": "date"
+        },
+        "postDealReview": {
+          "type": "object",
+          "description": "Post-deal review details",
+          "properties": {
+            "status": {
+              "type": "string",
+              "enum": ["Not Started", "Scheduled", "Completed"]
+            },
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "notes": {
+              "type": "string"
+            }
+          }
+        },
+        "clientFeedback": {
+          "type": "object",
+          "description": "Client feedback details",
+          "properties": {
+            "received": {
+              "type": "boolean"
+            },
+            "date": {
+              "type": "string",
+              "format": "date"
+            },
+            "rating": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "comments": {
+              "type": "string"
+            }
+          }
         }
       }
     },
@@ -173,7 +410,7 @@
       "type": "array",
       "description": "IDs of team members assigned to the deal",
       "items": {
-        "type": "integer"
+        "type": "string"
       }
     },
     "riskRating": {

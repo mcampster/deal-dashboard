@@ -1,6 +1,6 @@
 [
   {
-    "id": "1",
+    "id": "DEAL-001",
     "name": "Acme Corp IPO",
     "clientName": "Acme Corporation",
     "value": "$120M",
@@ -8,10 +8,41 @@
     "status": "Initial Review",
     "expectedCloseDate": "2023-12-15",
     "dealType": "IPO",
-    "createdAt": "2023-06-10"
+    "createdAt": "2023-06-10",
+    "description": "Initial public offering for Acme Corporation, a leading technology manufacturer.",
+    "riskRating": "Medium",
+    "priority": "High",
+    "tags": ["Technology", "Manufacturing", "IPO"],
+    "originationDetails": {
+      "dealTeamComplete": true,
+      "briberyCheckComplete": true,
+      "sanctionsCheckComplete": true,
+      "conflictClearanceComplete": false,
+      "kycComplete": true,
+      "wallCrossingRequestsComplete": false,
+      "pitchDate": "2023-05-15",
+      "mandateDate": "2023-06-01",
+      "engagementLetterDate": "2023-06-08",
+      "feeLetter": {
+        "status": "Completed",
+        "date": "2023-06-10",
+        "amount": "$5.5M"
+      },
+      "commitmentCommittee": {
+        "status": "Scheduled",
+        "date": "2023-06-20",
+        "notes": "Preliminary approval expected"
+      },
+      "riskAssessment": {
+        "status": "In Progress",
+        "rating": "Medium",
+        "notes": "Technology sector volatility is a concern"
+      }
+    },
+    "dealTeamIds": ["TEAM-001", "TEAM-003"]
   },
   {
-    "id": "2",
+    "id": "DEAL-002",
     "name": "TechGiant Acquisition",
     "clientName": "TechGiant Inc",
     "value": "$450M",
@@ -19,21 +50,179 @@
     "status": "Due Diligence",
     "expectedCloseDate": "2023-10-30",
     "dealType": "M&A",
-    "createdAt": "2023-05-22"
+    "createdAt": "2023-05-22",
+    "description": "Acquisition of SmallTech by TechGiant to expand product portfolio.",
+    "riskRating": "Medium",
+    "priority": "High",
+    "tags": ["Technology", "M&A", "Software"],
+    "originationDetails": {
+      "dealTeamComplete": true,
+      "briberyCheckComplete": true,
+      "sanctionsCheckComplete": true,
+      "conflictClearanceComplete": true,
+      "kycComplete": true,
+      "wallCrossingRequestsComplete": true,
+      "approvalDate": "2023-06-15",
+      "announcementDate": "2023-06-20",
+      "pitchDate": "2023-04-10",
+      "mandateDate": "2023-05-01",
+      "engagementLetterDate": "2023-05-15",
+      "feeLetter": {
+        "status": "Completed",
+        "date": "2023-05-18",
+        "amount": "$12M"
+      },
+      "commitmentCommittee": {
+        "status": "Approved",
+        "date": "2023-05-30",
+        "notes": "Approved with standard conditions"
+      },
+      "riskAssessment": {
+        "status": "Completed",
+        "rating": "Medium",
+        "notes": "Integration risks identified"
+      }
+    },
+    "executionDetails": {
+      "trancheBookId": "BOOK-001",
+      "dueDiligence": {
+        "status": "In Progress",
+        "provider": "BigFour Accounting",
+        "notes": "Financial and technical due diligence underway"
+      },
+      "legalDocumentation": {
+        "status": "In Progress",
+        "lawFirm": "Legal Eagles LLP",
+        "documents": [
+          {
+            "name": "Purchase Agreement",
+            "status": "Draft",
+            "date": "2023-07-01"
+          },
+          {
+            "name": "Disclosure Schedules",
+            "status": "Review",
+            "date": "2023-07-05"
+          }
+        ]
+      }
+    },
+    "dealTeamIds": ["TEAM-002", "TEAM-004"]
   },
   {
-    "id": "3",
+    "id": "DEAL-003",
     "name": "GreenEnergy Financing",
     "clientName": "GreenEnergy Solutions",
     "value": "$75M",
     "phase": "Closeout",
     "status": "Completed",
     "expectedCloseDate": "2023-08-15",
-    "dealType": "Debt",
-    "createdAt": "2023-02-18"
+    "actualCloseDate": "2023-08-12",
+    "dealType": "Debt Issuance",
+    "createdAt": "2023-02-18",
+    "description": "Debt financing for renewable energy projects.",
+    "riskRating": "Low",
+    "priority": "Medium",
+    "tags": ["Energy", "Green", "Debt"],
+    "originationDetails": {
+      "dealTeamComplete": true,
+      "briberyCheckComplete": true,
+      "sanctionsCheckComplete": true,
+      "conflictClearanceComplete": true,
+      "kycComplete": true,
+      "wallCrossingRequestsComplete": true,
+      "approvalDate": "2023-03-10",
+      "announcementDate": "2023-03-15",
+      "pitchDate": "2023-01-20",
+      "mandateDate": "2023-02-05",
+      "engagementLetterDate": "2023-02-15",
+      "feeLetter": {
+        "status": "Completed",
+        "date": "2023-02-18",
+        "amount": "$2.2M"
+      },
+      "commitmentCommittee": {
+        "status": "Approved",
+        "date": "2023-03-01",
+        "notes": "Approved with ESG considerations"
+      },
+      "riskAssessment": {
+        "status": "Completed",
+        "rating": "Low",
+        "notes": "Strong government backing reduces risk"
+      }
+    },
+    "executionDetails": {
+      "trancheBookId": "BOOK-003",
+      "orderBookId": "ORDER-002",
+      "pricingDate": "2023-07-20",
+      "allocationDate": "2023-07-25",
+      "settlementDate": "2023-08-01",
+      "bookStatus": "Closed",
+      "bookSize": "$75M",
+      "syndicateMembers": [
+        {
+          "name": "Global Bank",
+          "role": "Lead",
+          "allocation": "$40M"
+        },
+        {
+          "name": "Euro Finance",
+          "role": "Co-Lead",
+          "allocation": "$20M"
+        },
+        {
+          "name": "Asia Partners",
+          "role": "Member",
+          "allocation": "$15M"
+        }
+      ],
+      "dueDiligence": {
+        "status": "Completed",
+        "completionDate": "2023-06-30",
+        "provider": "Audit Partners",
+        "notes": "Clean report with minor recommendations"
+      },
+      "legalDocumentation": {
+        "status": "Completed",
+        "completionDate": "2023-07-15",
+        "lawFirm": "Green Legal LLP",
+        "documents": [
+          {
+            "name": "Indenture",
+            "status": "Final",
+            "date": "2023-07-10"
+          },
+          {
+            "name": "Offering Memorandum",
+            "status": "Final",
+            "date": "2023-07-12"
+          }
+        ]
+      }
+    },
+    "closeoutDetails": {
+      "totalRevenue": "$2.5M",
+      "totalExpenses": "$0.3M",
+      "netProfit": "$2.2M",
+      "revenueRecognitionDate": "2023-08-15",
+      "expenseReconciliationDate": "2023-08-20",
+      "postDealReview": {
+        "status": "Completed",
+        "date": "2023-08-25",
+        "notes": "Successful execution with good client feedback"
+      },
+      "clientFeedback": {
+        "received": true,
+        "date": "2023-08-30",
+        "rating": 5,
+        "comments": "Excellent service and execution"
+      }
+    },
+    "dealTeamIds": ["TEAM-001", "TEAM-005"]
   },
   {
-    "id": "4",
+    "id": "DEAL-004",
     "name": "MedTech Series B",
     "clientName": "MedTech Innovations",
     "value": "$35M",
@@ -41,127 +230,137 @@
     "status": "Approval Pending",
     "expectedCloseDate": "2023-11-20",
     "dealType": "Private Placement",
-    "createdAt": "2023-07-05"
+    "createdAt": "2023-07-05",
+    "description": "Series B funding round for medical technology startup.",
+    "riskRating": "Medium",
+    "priority": "Medium",
+    "tags": ["Healthcare", "Technology", "Venture Capital"],
+    "originationDetails": {
+      "dealTeamComplete": true,
+      "briberyCheckComplete": true,
+      "sanctionsCheckComplete": true,
+      "conflictClearanceComplete": true,
+      "kycComplete": false,
+      "wallCrossingRequestsComplete": false,
+      "pitchDate": "2023-06-15",
+      "mandateDate": "2023-07-01",
+      "engagementLetterDate": "2023-07-10",
+      "feeLetter": {
+        "status": "Completed",
+        "date": "2023-07-12",
+        "amount": "$1.2M"
+      },
+      "commitmentCommittee": {
+        "status": "Scheduled",
+        "date": "2023-07-25",
+        "notes": "Pending regulatory review"
+      },
+      "riskAssessment": {
+        "status": "In Progress",
+        "rating": "Medium",
+        "notes": "Regulatory approval is the main risk factor"
+      }
+    },
+    "dealTeamIds": ["TEAM-003", "TEAM-006"]
   },
   {
-    "id": "5",
+    "id": "DEAL-005",
     "name": "RetailCo Bond Issuance",
     "clientName": "RetailCo",
     "value": "$200M",
     "phase": "Execution",
     "status": "Book Building",
     "expectedCloseDate": "2023-09-28",
-    "dealType": "Debt",
-    "createdAt": "2023-04-12"
-  },
-  {
-    "id": "6",
-    "name": "FinServ Merger",
-    "clientName": "FinServ Holdings",
-    "value": "$320M",
-    "phase": "Origination",
-    "status": "Initial Review",
-    "expectedCloseDate": "2024-01-15",
-    "dealType": "M&A",
-    "createdAt": "2023-07-30"
-  },
-  {
-    "id": "7",
-    "name": "AutoTech Convertible Note",
-    "clientName": "AutoTech",
-    "value": "$50M",
-    "phase": "Execution",
-    "status": "Pricing",
-    "expectedCloseDate": "2023-10-05",
-    "dealType": "Debt",
-    "createdAt": "2023-06-22"
-  },
-  {
-    "id": "8",
-    "name": "ConsumerBrands Acquisition",
-    "clientName": "ConsumerBrands Inc",
-    "value": "$180M",
-    "phase": "Closeout",
-    "status": "Revenue Recognition",
-    "expectedCloseDate": "2023-07-10",
-    "dealType": "M&A",
-    "createdAt": "2023-01-15"
-  },
-  {
-    "id": "9",
-    "name": "CloudServices IPO",
-    "clientName": "CloudServices Tech",
-    "value": "$250M",
-    "phase": "Execution",
-    "status": "Allocation",
-    "expectedCloseDate": "2023-11-08",
-    "dealType": "IPO",
-    "createdAt": "2023-05-30"
-  },
-  {
-    "id": "10",
-    "name": "HealthCare REIT",
-    "clientName": "HealthCare Properties",
-    "value": "$400M",
-    "phase": "Origination",
-    "status": "Due Diligence",
-    "expectedCloseDate": "2024-02-20",
-    "dealType": "REIT",
-    "createdAt": "2023-08-05"
-  },
-  {
-    "id": "11",
-    "name": "EduTech Series C",
-    "clientName": "EduTech Learning",
-    "value": "$85M",
-    "phase": "Execution",
-    "status": "Approved",
-    "expectedCloseDate": "2023-10-15",
-    "dealType": "Private Placement",
-    "createdAt": "2023-06-18"
-  },
-  {
-    "id": "12",
-    "name": "IndustrialCo Divestiture",
-    "clientName": "IndustrialCo",
-    "value": "$150M",
-    "phase": "Closeout",
-    "status": "Expense Reconciliation",
-    "expectedCloseDate": "2023-08-30",
-    "dealType": "Divestiture",
-    "createdAt": "2023-03-10"
-  },
-  {
-    "id": "13",
-    "name": "AgriTech Funding Round",
-    "clientName": "AgriTech Solutions",
-    "value": "$60M",
-    "phase": "Origination",
-    "status": "Initial Review",
-    "expectedCloseDate": "2023-12-05",
-    "dealType": "Private Placement",
-    "createdAt": "2023-08-12"
-  },
-  {
-    "id": "14",
-    "name": "TelecomCo Notes Offering",
-    "clientName": "TelecomCo",
-    "value": "$300M",
-    "phase": "Execution",
-    "status": "Settlement",
-    "expectedCloseDate": "2023-09-20",
-    "dealType": "Debt",
-    "createdAt": "2023-04-25"
-  },
-  {
-    "id": "15",
-    "name": "SportsMedia Acquisition",
-    "clientName": "SportsMedia Group",
-    "value": "$220M",
-    "phase": "Origination",
-    "status": "Approval Pending",
-    "expectedCloseDate": "2024-01-30",
-    "dealType": "M&A",
-    "createdAt": "2023-07-15"
+    "dealType": "Debt Issuance",
+    "createdAt": "2023-04-12",
+    "description": "Corporate bond issuance to refinance existing debt.",
+    "riskRating": "Low",
+    "priority": "Medium",
+    "tags": ["Retail", "Debt", "Refinancing"],
+    "originationDetails": {
+      "dealTeamComplete": true,
+      "briberyCheckComplete": true,
+      "sanctionsCheckComplete": true,
+      "conflictClearanceComplete": true,
+      "kycComplete": true,
+      "wallCrossingRequestsComplete": true,
+      "approvalDate": "2023-05-20",
+      "announcementDate": "2023-05-25",
+      "pitchDate": "2023-03-15",
+      "mandateDate": "2023-04-01",
+      "engagementLetterDate": "2023-04-10",
+      "feeLetter": {
+        "status": "Completed",
+        "date": "2023-04-15",
+        "amount": "$4.5M"
+      },
+      "commitmentCommittee": {
+        "status": "Approved",
+        "date": "2023-05-10",
+        "notes": "Approved with standard conditions"
+      },
+      "riskAssessment": {
+        "status": "Completed",
+        "rating": "Low",
+        "notes": "Strong credit rating and established client"
+      }
+    },
+    "executionDetails": {
+      "trancheBookId": "BOOK-005",
+      "orderBookId": "ORDER-003",
+      "bookStatus": "Open",
+      "bookSize": "$180M",
+      "overallocation": "$20M",
+      "roadshowDetails": {
+        "startDate": "2023-08-01",
+        "endDate": "2023-08-10",
+        "locations": ["New York", "Boston", "Chicago", "San Francisco"],
+        "meetings": [
+          {
+            "date": "2023-08-02",
+            "location": "New York",
+            "attendees": ["Investor A", "Investor B", "Investor C"]
+          },
+          {
+            "date": "2023-08-04",
+            "location": "Boston",
+            "attendees": ["Investor D", "Investor E"]
+          },
+          {
+            "date": "2023-08-07",
+            "location": "Chicago",
+            "attendees": ["Investor F", "Investor G"]
+          },
+          {
+            "date": "2023-08-09",
+            "location": "San Francisco",
+            "attendees": ["Investor H", "Investor I", "Investor J"]
+          }
+        ]
+      },
+      "dueDiligence": {
+        "status": "Completed",
+        "completionDate": "2023-07-15",
+        "provider": "Global Audit",
+        "notes": "Clean report with no significant issues"
+      },
+      "legalDocumentation": {
+        "status": "In Progress",
+        "lawFirm": "Corporate Law Partners",
+        "documents": [
+          {
+            "name": "Prospectus",
+            "status": "Review",
+            "date": "2023-07-20"
+          },
+          {
+            "name": "Indenture",
+            "status": "Draft",
+            "date": "2023-07-25"
+          }
+        ]
+      }
+    },
+    "dealTeamIds": ["TEAM-002", "TEAM-007"]
   }
 ]

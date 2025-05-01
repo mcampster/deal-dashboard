@@ -1,49 +1,317 @@
 {
   "id": "deals-master-details",
-  "label": "Deals Master-Details",
-  "icon": "dollar",
-  "type": "master-details",
-  "description": "Browse deals with detailed information",
-  "entity": "deals",
-  "columns": [
-    { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
-    { "key": "phase", "label": "Phase", "type": "text", "field": "phase" },
-    { "key": "value", "label": "Value", "type": "currency", "field": "value" },
-    { "key": "closeDate", "label": "Close Date", "type": "date", "field": "closeDate" }
-  ],
-  "actions": [
-    { "id": "add-deal", "label": "Add Deal", "icon": "plus", "type": "primary" },
-    { "id": "export-deals", "label": "Export Deals", "icon": "download", "type": "secondary" },
-    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
-  ],
-  "detailsConfig": {
-    "primaryFields": ["name", "value", "phase", "closeDate", "company"],
-    "relatedEntities": [
+  "entityType": "deals",
+  "title": "Deals",
+  "description": "Master-details view for deals",
+  "masterView": {
+    "columns": [
       {
-        "id": "related-contacts",
-        "title": "Related Contacts",
-        "entity": "contacts",
-        "relationField": "company",
-        "columns": [
-          { "key": "name", "label": "Name", "type": "text", "field": "name" },
-          { "key": "email", "label": "Email", "type": "email", "icon": "mail", "field": "email" },
-          { "key": "phone", "label": "Phone", "type": "phone", "icon": "phone", "field": "phone" }
-        ],
-        "actions": [{ "id": "add-contact", "label": "Add Contact", "icon": "plus", "type": "primary" }]
+        "key": "name",
+        "label": "Deal Name",
+        "type": "text",
+        "field": "name",
+        "filterable": true
       },
       {
-        "id": "related-activities",
-        "title": "Activities",
-        "entity": "activities",
-        "relationField": "relatedTo",
-        "columns": [
-          { "key": "title", "label": "Title", "type": "text", "field": "title" },
-          { "key": "type", "label": "Type", "type": "text", "field": "type" },
-          { "key": "date", "label": "Date", "type": "date", "field": "date" },
-          { "key": "status", "label": "Status", "type": "text", "field": "status" }
-        ],
-        "actions": [{ "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" }],
-        "sort": [{ "field": "date", "direction": "desc" }]
+        "key": "clientName",
+        "label": "Client",
+        "type": "company",
+        "icon": "building",
+        "field": "clientName",
+        "filterable": true
+      },
+      {
+        "key": "value",
+        "label": "Value",
+        "type": "currency",
+        "field": "value",
+        "filterable": true
+      },
+      {
+        "key": "phase",
+        "label": "Phase",
+        "type": "text",
+        "field": "phase",
+        "filterable": true
+      },
+      {
+        "key": "status",
+        "label": "Status",
+        "type": "text",
+        "field": "status",
+        "filterable": true
+      },
+      {
+        "key": "expectedCloseDate",
+        "label": "Expected Close Date",
+        "type": "date",
+        "field": "expectedCloseDate"
+      },
+      {
+        "key": "dealType",
+        "label": "Deal Type",
+        "type": "text",
+        "field": "dealType",
+        "filterable": true
+      }
+    ],
+    "actions": [
+      {
+        "id": "new-deal",
+        "label": "New Deal",
+        "icon": "plus",
+        "type": "primary"
+      },
+      {
+        "id": "export",
+        "label": "Export",
+        "icon": "download",
+        "type": "secondary"
+      }
+    ]
+  },
+  "detailsView": {
+    "sections": [
+      {
+        "id": "general",
+        "label": "General Information",
+        "fields": [
+          {
+            "key": "name",
+            "label": "Deal Name",
+            "type": "text"
+          },
+          {
+            "key": "clientName",
+            "label": "Client",
+            "type": "company"
+          },
+          {
+            "key": "value",
+            "label": "Value",
+            "type": "currency"
+          },
+          {
+            "key": "phase",
+            "label": "Phase",
+            "type": "text"
+          },
+          {
+            "key": "status",
+            "label": "Status",
+            "type": "text"
+          },
+          {
+            "key": "dealType",
+            "label": "Deal Type",
+            "type": "text"
+          },
+          {
+            "key": "expectedCloseDate",
+            "label": "Expected Close Date",
+            "type": "date"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "textarea"
+          }
+        ]
+      },
+      {
+        "id": "origination",
+        "label": "Origination Details",
+        "fields": [
+          {
+            "key": "originationDetails.dealTeamComplete",
+            "label": "Deal Team Complete",
+            "type": "boolean"
+          },
+          {
+            "key": "originationDetails.briberyCheckComplete",
+            "label": "Bribery Check Complete",
+            "type": "boolean"
+          },
+          {
+            "key": "originationDetails.sanctionsCheckComplete",
+            "label": "Sanctions Check Complete",
+            "type": "boolean"
+          },
+          {
+            "key": "originationDetails.conflictClearanceComplete",
+            "label": "Conflict Clearance Complete",
+            "type": "boolean"
+          },
+          {
+            "key": "originationDetails.kycComplete",
+            "label": "KYC Complete",
+            "type": "boolean"
+          },
+          {
+            "key": "originationDetails.wallCrossingRequestsComplete",
+            "label": "Wall Crossing Requests Complete",
+            "type": "boolean"
+          },
+          {
+            "key": "originationDetails.pitchDate",
+            "label": "Pitch Date",
+            "type": "date"
+          },
+          {
+            "key": "originationDetails.mandateDate",
+            "label": "Mandate Date",
+            "type": "date"
+          },
+          {
+            "key": "originationDetails.engagementLetterDate",
+            "label": "Engagement Letter Date",
+            "type": "date"
+          },
+          {
+            "key": "originationDetails.approvalDate",
+            "label": "Approval Date",
+            "type": "date"
+          },
+          {
+            "key": "originationDetails.announcementDate",
+            "label": "Announcement Date",
+            "type": "date"
+          }
+        ]
+      },
+      {
+        "id": "execution",
+        "label": "Execution Details",
+        "fields": [
+          {
+            "key": "executionDetails.trancheBookId",
+            "label": "Tranche Book ID",
+            "type": "text"
+          },
+          {
+            "key": "executionDetails.orderBookId",
+            "label": "Order Book ID",
+            "type": "text"
+          },
+          {
+            "key": "executionDetails.hedgeBookId",
+            "label": "Hedge Book ID",
+            "type": "text"
+          },
+          {
+            "key": "executionDetails.pricingDate",
+            "label": "Pricing Date",
+            "type": "date"
+          },
+          {
+            "key": "executionDetails.allocationDate",
+            "label": "Allocation Date",
+            "type": "date"
+          },
+          {
+            "key": "executionDetails.settlementDate",
+            "label": "Settlement Date",
+            "type": "date"
+          },
+          {
+            "key": "executionDetails.bookStatus",
+            "label": "Book Status",
+            "type": "text"
+          },
+          {
+            "key": "executionDetails.bookSize",
+            "label": "Book Size",
+            "type": "currency"
+          }
+        ]
+      },
+      {
+        "id": "closeout",
+        "label": "Closeout Details",
+        "fields": [
+          {
+            "key": "closeoutDetails.totalRevenue",
+            "label": "Total Revenue",
+            "type": "currency"
+          },
+          {
+            "key": "closeoutDetails.totalExpenses",
+            "label": "Total Expenses",
+            "type": "currency"
+          },
+          {
+            "key": "closeoutDetails.netProfit",
+            "label": "Net Profit",
+            "type": "currency"
+          },
+          {
+            "key": "closeoutDetails.revenueRecognitionDate",
+            "label": "Revenue Recognition Date",
+            "type": "date"
+          },
+          {
+            "key": "closeoutDetails.expenseReconciliationDate",
+            "label": "Expense Reconciliation Date",
+            "type": "date"
+          },
+          {
+            "key": "actualCloseDate",
+            "label": "Actual Close Date",
+            "type": "date"
+          }
+        ]
+      },
+      {
+        "id": "other",
+        "label": "Other Information",
+        "fields": [
+          {
+            "key": "riskRating",
+            "label": "Risk Rating",
+            "type": "text"
+          },
+          {
+            "key": "priority",
+            "label": "Priority",
+            "type": "text"
+          },
+          {
+            "key": "tags",
+            "label": "Tags",
+            "type": "tags"
+          },
+          {
+            "key": "notes",
+            "label": "Notes",
+            "type": "textarea"
+          }
+        ]
+      }
+    ],
+    "relatedEntities": [
+      {
+        "id": "client",
+        "label": "Client",
+        "entityType": "clients",
+        "relationship": "one-to-one"
+      },
+      {
+        "id": "contacts",
+        "label": "Contacts",
+        "entityType": "contacts",
+        "relationship": "many-to-many"
+      },
+      {
+        "id": "dealTeam",
+        "label": "Deal Team",
+        "entityType": "dealTeams",
+        "relationship": "many-to-many"
+      },
+      {
+        "id": "activities",
+        "label": "Activities",
+        "entityType": "activities",
+        "relationship": "one-to-many"
       }
     ]
   }
