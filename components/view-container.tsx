@@ -43,12 +43,16 @@ export function ViewContainer({
 
   // Use useMemo for filtering views to prevent recalculation on every render
   const availableViews = useMemo(() => {
+    if (!Array.isArray(viewsConfig)) return []
+
     return viewsConfig.filter((view) => {
-      if (viewType !== "all" && view.type !== viewType) return false
-      if (entity && view.entity !== entity) return false
+      // If viewType is specified, filter by that type
+      if (viewType && view.type !== viewType) {
+        return false
+      }
       return true
     })
-  }, [viewType, entity])
+  }, [viewType])
 
   // Use useMemo to determine the selected view to prevent recalculation
   const selectedView = useMemo(() => {
