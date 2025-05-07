@@ -12,6 +12,7 @@ import { CardConfigEditor } from "@/components/card-config-editor"
 import { VisualizationFilters } from "@/components/visualization-filters"
 import { useViewData } from "@/hooks/use-view-data"
 import { getAvailableColumnsFromSchema } from "@/lib/schema-utils"
+import { EntityPreviewPanel } from "@/components/entity-preview-panel"
 import type { ViewConfig, FilterState, CardConfig } from "@/config/types"
 
 interface EntityDataViewProps {
@@ -22,6 +23,8 @@ interface EntityDataViewProps {
 export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
   // Add state for the current view (to handle column changes)
   const [currentView, setCurrentView] = useState<ViewConfig>(view)
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [previewEntityId, setPreviewEntityId] = useState<string | null>(null)
 
   // Get all available columns from the schema
   const availableColumns = currentView.entity ? getAvailableColumnsFromSchema(currentView.entity) : []
@@ -138,11 +141,18 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
 
   // Handle preview click for card layout
   const handlePreviewClick = (entityId: string) => {
-    // If in card or table layout, switch to master-details and select the entity
-    if (layout !== "master-details") {
-      setLayout("master-details")
-      // In a real implementation, you would also set the selected entity ID
-    }
+    console.log("EntityDataView: Preview clicked for entity:", entityId)
+    setPreviewEntityId(entityId)
+    setPreviewOpen(true)
+  }
+
+  // Handle closing the preview panel
+  const handlePreviewClose = () => {
+    setPreviewOpen(false)
+    // Clear the entity ID when closing
+    setTimeout(() => {
+      setPreviewEntityId(null)
+    }, 300)
   }
 
   return (
@@ -220,6 +230,16 @@ export function EntityDataView({ view, onViewChange }: EntityDataViewProps) {
           error={error || null}
           pagination={pagination || { page: 1, pageSize: 10, total: 0, totalPages: 1 }}
           onPageChange={setPage || (() => {})}
+        />
+      )}
+
+      {/* Preview panel */}
+      {currentView.entity && (
+        <EntityPreviewPanel
+          open={previewOpen}
+          onClose={handlePreviewClose}
+          entityId={previewEntityId}
+          entityType={currentView.entity}
         />
       )}
     </div>

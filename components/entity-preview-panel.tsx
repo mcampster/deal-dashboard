@@ -10,16 +10,19 @@ import { viewsConfig } from "@/config/views" // Import viewsConfig
 interface EntityPreviewPanelProps {
   open: boolean
   onClose: () => void
+  onOpenChange?: (open: boolean) => void
   entityId: string | null
   entityType: string
 }
 
-export function EntityPreviewPanel({ open, onClose, entityId, entityType }: EntityPreviewPanelProps) {
+export function EntityPreviewPanel({ open, onClose, onOpenChange, entityId, entityType }: EntityPreviewPanelProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const previousActiveElement = useRef<Element | null>(null)
 
   // Get the appropriate details view config based on entity type
   const detailsViewConfig = useMemo(() => {
+    if (!Array.isArray(viewsConfig)) return null
+
     // Try to get the specific details view for this entity type
     const viewId = `${entityType}-details`
     const view = getViewById(viewId)
@@ -36,7 +39,11 @@ export function EntityPreviewPanel({ open, onClose, entityId, entityType }: Enti
   useEffect(() => {
     const handleEscapeKey = (e: KeyboardEvent) => {
       if (e.key === "Escape" && open) {
-        onClose()
+        if (onOpenChange) {
+          onOpenChange(false)
+        } else {
+          onClose()
+        }
       }
     }
 
@@ -71,13 +78,17 @@ export function EntityPreviewPanel({ open, onClose, entityId, entityType }: Enti
       document.removeEventListener("keydown", handleEscapeKey)
       document.body.style.overflow = ""
     }
-  }, [open, onClose])
+  }, [open, onClose, onOpenChange])
 
   // Handle clicks outside the panel
   useEffect(() => {
     const handleOutsideClick = (e: MouseEvent) => {
       if (panelRef.current && !panelRef.current.contains(e.target as Node)) {
-        onClose()
+        if (onOpenChange) {
+          onOpenChange(false)
+        } else {
+          onClose()
+        }
       }
     }
 
@@ -92,7 +103,9 @@ export function EntityPreviewPanel({ open, onClose, entityId, entityType }: Enti
         document.removeEventListener("mousedown", handleOutsideClick)
       }
     }
-  }, [open, onClose])
+
+    return undefined
+  }, [open, onClose, onOpenChange])
 
   // If not open or no valid config/entity, don't render
   if (!open || !detailsViewConfig || !entityId) {
@@ -117,7 +130,18 @@ export function EntityPreviewPanel({ open, onClose, entityId, entityType }: Enti
               </h2>
               <p className="text-xs text-muted-foreground">Preview of {entityType} details</p>
             </div>
-            <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close preview">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => {
+                if (onOpenChange) {
+                  onOpenChange(false)
+                } else {
+                  onClose()
+                }
+              }}
+              aria-label="Close preview"
+            >
               <X className="h-4 w-4" />
             </Button>
           </div>

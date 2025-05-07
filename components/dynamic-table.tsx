@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp, ArrowUpDown } from "lucide-react"
+import { ChevronDown, ChevronUp, ArrowUpDown, Eye } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Pagination } from "@/components/pagination"
 import { formatCellValue } from "@/lib/utils"
@@ -23,6 +23,9 @@ interface DynamicTableProps {
   onPageChange?: (page: number) => void
   onSortChange?: (sort: SortConfig[]) => void
   onRowClick?: (id: string) => void
+  className?: string
+  hideFilters?: boolean
+  hideSorts?: boolean
 }
 
 export function DynamicTable({
@@ -34,6 +37,9 @@ export function DynamicTable({
   onPageChange = () => {},
   onSortChange,
   onRowClick,
+  className = "",
+  hideFilters = false,
+  hideSorts = false,
 }: DynamicTableProps) {
   const [sortConfig, setSortConfig] = useState<SortConfig[]>(view.sort || [])
   const [currentColumns, setCurrentColumns] = useState(view.columns || [])
@@ -121,12 +127,13 @@ export function DynamicTable({
   if (isLoading) {
     return (
       <div>
-        <Table>
+        <Table className={className}>
           <TableHeader>
             <TableRow>
               {currentColumns.map((column) => (
                 <TableHead key={column.key}>{column.label}</TableHead>
               ))}
+              {onRowClick && <TableHead className="w-[80px]">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -137,6 +144,11 @@ export function DynamicTable({
                     <Skeleton className="h-4 w-full" />
                   </TableCell>
                 ))}
+                {onRowClick && (
+                  <TableCell className="text-right">
+                    <Skeleton className="h-8 w-8 rounded-full ml-auto" />
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>
@@ -160,35 +172,52 @@ export function DynamicTable({
   return (
     <div>
       <div className="rounded-md border">
-        <Table>
+        <Table className={className}>
           <TableHeader>
             <TableRow>
               {currentColumns.map((column) => (
                 <TableHead key={column.key}>
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleSortClick(column.field)}
-                    className="flex items-center p-0 h-auto font-medium"
-                  >
-                    {column.label}
-                    {renderSortIndicator(column.field)}
-                  </Button>
+                  {!hideSorts ? (
+                    <Button
+                      variant="ghost"
+                      onClick={() => handleSortClick(column.field)}
+                      className="flex items-center p-0 h-auto font-medium"
+                    >
+                      {column.label}
+                      {renderSortIndicator(column.field)}
+                    </Button>
+                  ) : (
+                    column.label
+                  )}
                 </TableHead>
               ))}
+              {onRowClick && <TableHead className="w-[80px]">Actions</TableHead>}
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.map((row, rowIndex) => (
-              <TableRow
-                key={row.id || rowIndex}
-                className={onRowClick ? "cursor-pointer hover:bg-muted/50" : ""}
-                onClick={() => handleRowClick(row.id)}
-              >
+              <TableRow key={row.id || rowIndex} className="hover:bg-muted/50">
                 {currentColumns.map((column) => (
                   <TableCell key={`${row.id || rowIndex}-${column.key}`}>
                     {formatCellValue(row[column.field], column.type)}
                   </TableCell>
                 ))}
+                {onRowClick && (
+                  <TableCell className="text-right">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleRowClick(row.id)
+                      }}
+                      className="h-8 w-8 p-0"
+                      aria-label="Preview"
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                  </TableCell>
+                )}
               </TableRow>
             ))}
           </TableBody>

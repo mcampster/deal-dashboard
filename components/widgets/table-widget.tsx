@@ -26,9 +26,9 @@ const TableWidget: React.FC<TableWidgetProps> = ({ children, entityType, onPrevi
   }
 
   // Handle closing the preview panel
-  const handlePreviewClose = (open: boolean) => {
-    setPreviewOpen(open)
-    if (!open) {
+  const handlePreviewClose = () => {
+    setPreviewOpen(false)
+    if (!previewOpen) {
       setTimeout(() => {
         setPreviewEntityId(null)
       }, 300)
@@ -42,7 +42,7 @@ const TableWidget: React.FC<TableWidgetProps> = ({ children, entityType, onPrevi
       {entityType && previewEntityId && (
         <EntityPreviewPanel
           open={previewOpen}
-          onOpenChange={handlePreviewClose}
+          onClose={handlePreviewClose}
           entityId={previewEntityId}
           entityType={entityType}
         />
