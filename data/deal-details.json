@@ -1,104 +1,119 @@
 {
-  "id": "DEAL-001",
-  "name": "Acme Corp IPO",
-  "clientName": "Acme Corporation",
-  "value": "$120M",
-  "phase": "Origination",
-  "status": "Initial Review",
-  "expectedCloseDate": "2023-12-15",
-  "dealType": "IPO",
-  "createdAt": "2023-06-10",
-  "description": "Initial public offering for Acme Corporation, a leading technology manufacturer.",
-  "riskRating": "Medium",
-  "priority": "High",
-  "tags": ["Technology", "Manufacturing", "IPO"],
-  "originationDetails": {
-    "dealTeamComplete": true,
-    "briberyCheckComplete": true,
-    "sanctionsCheckComplete": true,
-    "conflictClearanceComplete": false,
-    "kycComplete": true,
-    "wallCrossingRequestsComplete": false,
-    "pitchDate": "2023-05-15",
-    "mandateDate": "2023-06-01",
-    "engagementLetterDate": "2023-06-08",
-    "feeLetter": {
-      "status": "Completed",
-      "date": "2023-06-10",
-      "amount": "$5.5M"
-    },
-    "commitmentCommittee": {
-      "status": "Scheduled",
-      "date": "2023-06-20",
-      "notes": "Preliminary approval expected"
-    },
-    "riskAssessment": {
-      "status": "In Progress",
-      "rating": "Medium",
-      "notes": "Technology sector volatility is a concern"
-    }
-  },
-  "dealTeamIds": ["TEAM-001", "TEAM-003"],
-  "relatedEntities": {
-    "client": {
-      "id": "CLIENT-001",
-      "name": "Acme Corporation",
-      "industry": "Technology Manufacturing",
-      "relationship": "Existing Client",
-      "relationshipManager": "Jane Smith"
-    },
-    "contacts": [
-      {
-        "id": "CONTACT-001",
-        "name": "John Doe",
-        "title": "CFO",
-        "email": "john.doe@acmecorp.com",
-        "phone": "+1-555-123-4567"
-      },
-      {
-        "id": "CONTACT-002",
-        "name": "Sarah Johnson",
-        "title": "General Counsel",
-        "email": "sarah.johnson@acmecorp.com",
-        "phone": "+1-555-987-6543"
-      }
+  "id": "deal-details",
+  "label": "Deal Details",
+  "icon": "file-text",
+  "description": "Detailed view of a deal",
+  "type": "details",
+  "entity": "deals",
+  "detailsConfig": {
+    "primaryFields": [
+      "general.id",
+      "general.name",
+      "general.description",
+      "general.value",
+      "general.status",
+      "general.phase",
+      "general.createdAt",
+      "general.updatedAt",
+      "origination.pitchDate",
+      "origination.mandateDate",
+      "origination.engagementLetterDate",
+      "origination.feeLetterDate",
+      "origination.commitmentCommitteeDate",
+      "origination.kycStatus",
+      "origination.sanctionsStatus",
+      "origination.briberyStatus",
+      "execution.bookStatus",
+      "execution.bookSize",
+      "execution.overallocation",
+      "execution.roadshowStartDate",
+      "execution.roadshowEndDate",
+      "execution.dueDate",
+      "execution.legalDocStatus",
+      "closeout.revenue",
+      "closeout.expenses",
+      "closeout.profit",
+      "closeout.reviewDate",
+      "closeout.clientFeedback"
     ],
-    "dealTeam": [
+    "relatedEntities": [
       {
-        "id": "TEAM-001",
-        "name": "Investment Banking Team",
-        "lead": "Michael Chen",
-        "members": ["Alice Wong", "Robert Garcia", "Emily Taylor"]
+        "id": "related-clients",
+        "title": "Related Clients",
+        "entity": "clients",
+        "columns": [
+          {
+            "key": "name",
+            "label": "Name",
+            "type": "text",
+            "field": "name"
+          },
+          {
+            "key": "industry",
+            "label": "Industry",
+            "type": "text",
+            "field": "industry"
+          }
+        ],
+        "relationField": "dealId",
+        "limit": 5
       },
       {
-        "id": "TEAM-003",
-        "name": "Legal Team",
-        "lead": "David Miller",
-        "members": ["Jennifer Lee", "Thomas Brown"]
+        "id": "related-contacts",
+        "title": "Related Contacts",
+        "entity": "contacts",
+        "columns": [
+          {
+            "key": "name",
+            "label": "Name",
+            "type": "text",
+            "field": "name"
+          },
+          {
+            "key": "email",
+            "label": "Email",
+            "type": "email",
+            "field": "email"
+          }
+        ],
+        "relationField": "dealId",
+        "limit": 5
+      },
+      {
+        "id": "related-activities",
+        "title": "Related Activities",
+        "entity": "activities",
+        "columns": [
+          {
+            "key": "type",
+            "label": "Type",
+            "type": "text",
+            "field": "type"
+          },
+          {
+            "key": "date",
+            "label": "Date",
+            "type": "date",
+            "field": "date"
+          }
+        ],
+        "relationField": "dealId",
+        "limit": 5
       }
     ]
   },
-  "activities": [
+  "actions": [
     {
-      "id": "ACTIVITY-001",
-      "type": "Meeting",
-      "date": "2023-05-15",
-      "description": "Initial pitch meeting with Acme Corp executives",
-      "participants": ["Michael Chen", "Alice Wong", "John Doe", "Sarah Johnson"]
+      "id": "edit-deal",
+      "label": "Edit Deal",
+      "icon": "pencil",
+      "type": "primary"
     },
     {
-      "id": "ACTIVITY-002",
-      "type": "Document",
-      "date": "2023-06-01",
-      "description": "Mandate letter signed",
-      "participants": ["Michael Chen", "John Doe"]
-    },
-    {
-      "id": "ACTIVITY-003",
-      "type": "Call",
-      "date": "2023-06-05",
-      "description": "Discussion about engagement terms",
-      "participants": ["Alice Wong", "Sarah Johnson"]
+      "id": "delete-deal",
+      "label": "Delete Deal",
+      "icon": "trash",
+      "type": "secondary"
     }
   ]
 }

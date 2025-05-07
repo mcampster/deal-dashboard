@@ -5,41 +5,88 @@
   "description": "Detailed view of a contact",
   "type": "details",
   "entity": "contacts",
-  "actions": [
-    { "id": "edit-contact", "label": "Edit Contact", "icon": "edit", "type": "primary" },
-    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
-  ],
   "detailsConfig": {
-    "primaryFields": ["name", "email", "phone", "company"],
+    "primaryFields": [
+      "id",
+      "name",
+      "email",
+      "phone",
+      "title",
+      "company",
+      "department",
+      "status",
+      "createdAt",
+      "updatedAt"
+    ],
     "relatedEntities": [
       {
         "id": "related-deals",
-        "title": "Deals",
+        "title": "Related Deals",
         "entity": "deals",
-        "relationField": "company",
         "columns": [
-          { "key": "name", "label": "Deal Name", "type": "text", "field": "name" },
-          { "key": "value", "label": "Value", "type": "currency", "field": "value" },
-          { "key": "stage", "label": "Stage", "type": "text", "field": "stage" },
-          { "key": "closeDate", "label": "Close Date", "type": "date", "field": "closeDate" }
+          {
+            "key": "name",
+            "label": "Name",
+            "type": "text",
+            "field": "name"
+          },
+          {
+            "key": "value",
+            "label": "Value",
+            "type": "currency",
+            "field": "value"
+          },
+          {
+            "key": "status",
+            "label": "Status",
+            "type": "text",
+            "field": "status"
+          }
         ],
-        "actions": [{ "id": "add-deal", "label": "Add Deal", "icon": "plus", "type": "primary" }]
+        "relationField": "contactId",
+        "limit": 5
       },
       {
         "id": "related-activities",
-        "title": "Activities",
+        "title": "Related Activities",
         "entity": "activities",
-        "relationField": "assignedTo",
         "columns": [
-          { "key": "title", "label": "Title", "type": "text", "field": "title" },
-          { "key": "type", "label": "Type", "type": "text", "field": "type" },
-          { "key": "date", "label": "Date", "type": "date", "field": "date" },
-          { "key": "status", "label": "Status", "type": "text", "field": "status" },
-          { "key": "relatedTo", "label": "Related To", "type": "company", "icon": "building", "field": "relatedTo" }
+          {
+            "key": "type",
+            "label": "Type",
+            "type": "text",
+            "field": "type"
+          },
+          {
+            "key": "date",
+            "label": "Date",
+            "type": "date",
+            "field": "date"
+          },
+          {
+            "key": "description",
+            "label": "Description",
+            "type": "text",
+            "field": "description"
+          }
         ],
-        "actions": [{ "id": "add-activity", "label": "Add Activity", "icon": "plus", "type": "primary" }],
-        "sort": [{ "field": "date", "direction": "desc" }]
+        "relationField": "contactId",
+        "limit": 5
       }
     ]
-  }
+  },
+  "actions": [
+    {
+      "id": "edit-contact",
+      "label": "Edit Contact",
+      "icon": "pencil",
+      "type": "primary"
+    },
+    {
+      "id": "delete-contact",
+      "label": "Delete Contact",
+      "icon": "trash",
+      "type": "secondary"
+    }
+  ]
 }

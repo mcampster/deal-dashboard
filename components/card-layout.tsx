@@ -8,6 +8,7 @@ import { EntityAvatar } from "@/components/entity-avatar"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { EntityPreviewPanel } from "@/components/entity-preview-panel"
+import { Eye, ExternalLink } from "lucide-react"
 import type { ViewConfig, CardConfig } from "@/config/types"
 
 interface CardLayoutProps {
@@ -45,19 +46,7 @@ export function CardLayout({
   // Get the route for the entity detail page
   const getEntityDetailRoute = (entityId: string) => {
     if (!view?.entity) return "#"
-
-    switch (view.entity) {
-      case "deals":
-        return `/deals/details?id=${entityId}`
-      case "contacts":
-        return `/contacts/details?id=${entityId}`
-      case "clients":
-        return `/clients/details?id=${entityId}`
-      case "activities":
-        return `/activities/details?id=${entityId}`
-      default:
-        return `/${view.entity}/details?id=${entityId}`
-    }
+    return `/${view.entity}/details?id=${entityId}`
   }
 
   // Handle preview click
@@ -211,10 +200,14 @@ export function CardLayout({
                     onClick={() => handlePreviewClick(item.id.toString())}
                     className="mr-2"
                   >
+                    <Eye className="mr-1 h-4 w-4" />
                     Preview
                   </Button>
                   <Button variant="default" size="sm" asChild>
-                    <Link href={getEntityDetailRoute(item.id)}>View</Link>
+                    <Link href={getEntityDetailRoute(item.id)}>
+                      <ExternalLink className="mr-1 h-4 w-4" />
+                      View Details
+                    </Link>
                   </Button>
                 </div>
               </CardContent>
@@ -235,12 +228,14 @@ export function CardLayout({
       )}
 
       {/* Preview panel */}
-      <EntityPreviewPanel
-        open={previewOpen}
-        onOpenChange={setPreviewOpen}
-        entityId={previewEntityId}
-        entityType={view.entity || ""}
-      />
+      {view.entity && (
+        <EntityPreviewPanel
+          open={previewOpen}
+          onOpenChange={setPreviewOpen}
+          entityId={previewEntityId}
+          entityType={view.entity}
+        />
+      )}
     </div>
   )
 }
@@ -289,7 +284,7 @@ function CardLayoutSkeleton() {
             </div>
             <div className="mt-4 flex justify-end gap-2">
               <Skeleton className="h-8 w-20" />
-              <Skeleton className="h-8 w-16" />
+              <Skeleton className="h-8 w-24" />
             </div>
           </CardContent>
         </Card>

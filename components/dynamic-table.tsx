@@ -3,10 +3,11 @@
 import { useState, useEffect } from "react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp, ArrowUpDown, Eye } from "lucide-react"
+import { ChevronDown, ChevronUp, ArrowUpDown, Eye, ExternalLink } from "lucide-react"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Pagination } from "@/components/pagination"
 import { formatCellValue } from "@/lib/utils"
+import Link from "next/link"
 import type { ViewConfig, SortConfig, SortDirection } from "@/config/types"
 
 interface DynamicTableProps {
@@ -105,6 +106,12 @@ export function DynamicTable({
     }
   }
 
+  // Get the route for the entity detail page
+  const getEntityDetailRoute = (entityId: string) => {
+    if (!view?.entity) return "#"
+    return `/${view.entity}/details?id=${entityId}`
+  }
+
   // If there's an error, display it
   if (error) {
     return (
@@ -133,7 +140,7 @@ export function DynamicTable({
               {currentColumns.map((column) => (
                 <TableHead key={column.key}>{column.label}</TableHead>
               ))}
-              {onRowClick && <TableHead className="w-[80px]">Actions</TableHead>}
+              <TableHead className="w-[120px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -144,11 +151,12 @@ export function DynamicTable({
                     <Skeleton className="h-4 w-full" />
                   </TableCell>
                 ))}
-                {onRowClick && (
-                  <TableCell className="text-right">
-                    <Skeleton className="h-8 w-8 rounded-full ml-auto" />
-                  </TableCell>
-                )}
+                <TableCell className="text-right">
+                  <div className="flex justify-end space-x-2">
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                    <Skeleton className="h-8 w-8 rounded-full" />
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -191,33 +199,51 @@ export function DynamicTable({
                   )}
                 </TableHead>
               ))}
-              {onRowClick && <TableHead className="w-[80px]">Actions</TableHead>}
+              <TableHead className="w-[120px]">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {data.map((row, rowIndex) => (
-              <TableRow key={row.id || rowIndex} className="hover:bg-muted/50">
+              <TableRow
+                key={row.id || rowIndex}
+                className="hover:bg-muted/50 cursor-pointer"
+                onClick={() => (window.location.href = getEntityDetailRoute(row.id))}
+              >
                 {currentColumns.map((column) => (
                   <TableCell key={`${row.id || rowIndex}-${column.key}`}>
                     {formatCellValue(row[column.field], column.type)}
                   </TableCell>
                 ))}
-                {onRowClick && (
-                  <TableCell className="text-right">
+                <TableCell className="text-right">
+                  <div className="flex justify-end space-x-2">
+                    {onRowClick && (
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          handleRowClick(row.id)
+                        }}
+                        className="h-8 w-8 p-0"
+                        aria-label="Preview"
+                      >
+                        <Eye className="h-4 w-4" />
+                      </Button>
+                    )}
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        handleRowClick(row.id)
-                      }}
+                      asChild
+                      onClick={(e) => e.stopPropagation()}
                       className="h-8 w-8 p-0"
-                      aria-label="Preview"
+                      aria-label="View Details"
                     >
-                      <Eye className="h-4 w-4" />
+                      <Link href={getEntityDetailRoute(row.id)}>
+                        <ExternalLink className="h-4 w-4" />
+                      </Link>
                     </Button>
-                  </TableCell>
-                )}
+                  </div>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>

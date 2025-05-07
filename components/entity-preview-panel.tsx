@@ -1,11 +1,13 @@
 "use client"
 
-import { useEffect, useMemo, useRef } from "react"
-import { X } from "lucide-react"
+import { useEffect, useMemo, useRef, useState } from "react"
+import { X, ExternalLink } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getViewById } from "@/config/views"
 import { EntityDetailsContent } from "@/components/entity-details-content"
-import { viewsConfig } from "@/config/views" // Import viewsConfig
+import { viewsConfig } from "@/config/views"
+import Link from "next/link"
+import { getMockData } from "@/lib/mock-data"
 
 interface EntityPreviewPanelProps {
   open: boolean
@@ -18,6 +20,8 @@ interface EntityPreviewPanelProps {
 export function EntityPreviewPanel({ open, onClose, onOpenChange, entityId, entityType }: EntityPreviewPanelProps) {
   const panelRef = useRef<HTMLDivElement>(null)
   const previousActiveElement = useRef<Element | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [entityData, setEntityData] = useState<any>(null)
 
   // Get the appropriate details view config based on entity type
   const detailsViewConfig = useMemo(() => {
@@ -34,6 +38,29 @@ export function EntityPreviewPanel({ open, onClose, onOpenChange, entityId, enti
 
     return fallbackViews.length > 0 ? fallbackViews[0] : null
   }, [entityType])
+
+  // Load entity data when panel opens
+  useEffect(() => {
+    if (open && entityId) {
+      setIsLoading(true)
+
+      try {
+        // Use getMockData instead of dynamic import
+        const data = getMockData(entityType, entityId)
+        if (data && data.length > 0) {
+          setEntityData(data[0])
+        } else {
+          console.warn(`No data found for ${entityType} with ID ${entityId}`)
+          setEntityData(null)
+        }
+      } catch (error) {
+        console.error("Error loading entity data:", error)
+        setEntityData(null)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+  }, [open, entityId, entityType])
 
   // Handle escape key press
   useEffect(() => {
@@ -130,31 +157,56 @@ export function EntityPreviewPanel({ open, onClose, onOpenChange, entityId, enti
               </h2>
               <p className="text-xs text-muted-foreground">Preview of {entityType} details</p>
             </div>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => {
-                if (onOpenChange) {
-                  onOpenChange(false)
-                } else {
-                  onClose()
-                }
-              }}
-              aria-label="Close preview"
-            >
-              <X className="h-4 w-4" />
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button variant="outline" size="sm" asChild>
+                <Link href={`/${entityType}/details?id=${entityId}`}>
+                  <ExternalLink className="mr-2 h-4 w-4" />
+                  Full Details
+                </Link>
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => {
+                  if (onOpenChange) {
+                    onOpenChange(false)
+                  } else {
+                    onClose()
+                  }
+                }}
+                aria-label="Close preview"
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </div>
 
         <div className="p-4">
-          <EntityDetailsContent
-            viewConfig={detailsViewConfig}
-            entityId={entityId}
-            entityType={entityType}
-            showFullDetailsButton={true}
-            className="pb-16" // Add padding at the bottom for better scrolling
-          />
+          {isLoading ? (
+            <div className="space-y-4">
+              <div className="h-6 bg-muted rounded animate-pulse" />
+              <div className="h-4 bg-muted rounded animate-pulse w-3/4" />
+              <div className="h-4 bg-muted rounded animate-pulse" />
+              <div className="h-4 bg-muted rounded animate-pulse w-1/2" />
+              <div className="grid grid-cols-2 gap-4 mt-6">
+                <div className="h-20 bg-muted rounded animate-pulse" />
+                <div className="h-20 bg-muted rounded animate-pulse" />
+              </div>
+            </div>
+          ) : entityData ? (
+            <EntityDetailsContent
+              viewConfig={detailsViewConfig}
+              entityId={entityId}
+              entityType={entityType}
+              showFullDetailsButton={true}
+              className="pb-16" // Add padding at the bottom for better scrolling
+            />
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-muted-foreground">No data found for this {entityType}</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

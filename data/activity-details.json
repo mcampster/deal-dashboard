@@ -5,12 +5,77 @@
   "description": "Detailed view of an activity",
   "type": "details",
   "entity": "activities",
-  "actions": [
-    { "id": "edit-activity", "label": "Edit Activity", "icon": "edit", "type": "primary" },
-    { "id": "refresh", "label": "Refresh", "icon": "refresh", "type": "secondary" }
-  ],
   "detailsConfig": {
-    "primaryFields": ["title", "type", "date", "status", "relatedTo", "assignedTo", "notes"],
-    "relatedEntities": []
-  }
+    "primaryFields": ["id", "type", "date", "description", "status", "createdAt", "updatedAt"],
+    "relatedEntities": [
+      {
+        "id": "related-deals",
+        "title": "Related Deals",
+        "entity": "deals",
+        "columns": [
+          {
+            "key": "name",
+            "label": "Name",
+            "type": "text",
+            "field": "name"
+          },
+          {
+            "key": "value",
+            "label": "Value",
+            "type": "currency",
+            "field": "value"
+          },
+          {
+            "key": "status",
+            "label": "Status",
+            "type": "text",
+            "field": "status"
+          }
+        ],
+        "relationField": "activityId",
+        "limit": 5
+      },
+      {
+        "id": "related-contacts",
+        "title": "Related Contacts",
+        "entity": "contacts",
+        "columns": [
+          {
+            "key": "name",
+            "label": "Name",
+            "type": "text",
+            "field": "name"
+          },
+          {
+            "key": "email",
+            "label": "Email",
+            "type": "email",
+            "field": "email"
+          },
+          {
+            "key": "phone",
+            "label": "Phone",
+            "type": "phone",
+            "field": "phone"
+          }
+        ],
+        "relationField": "activityId",
+        "limit": 5
+      }
+    ]
+  },
+  "actions": [
+    {
+      "id": "edit-activity",
+      "label": "Edit Activity",
+      "icon": "pencil",
+      "type": "primary"
+    },
+    {
+      "id": "delete-activity",
+      "label": "Delete Activity",
+      "icon": "trash",
+      "type": "secondary"
+    }
+  ]
 }
